@@ -1,1 +1,46 @@
 {% extends "global/base.html" %}
+{% load bootstrap_icons %}
+
+{% block content %}
+    <header>
+        <div class="list-icon">{% bs_icon 'list' %}</div>
+        <h1>Storage</h1>
+        <input type="search" id="search" placeholder="Search">
+        <div class="person-circle-icon">{% bs_icon 'person-circle' %}</div>
+    </header>
+    <main>
+        <div class="responsive-table">
+            <caption class="table-caption">
+                Items
+            </caption>
+
+            <thead>
+                <tr class="table-row-header">
+                    <th class="table-header">ID</th>
+                    <th class="table-header">Description</th>
+                    <th class="table-header">Is Available</th>
+                    <th class="table-header">Owner</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in items %}
+                    <tr class="table-row">
+                        <td class="table-cel">
+                            <a href="#" class="tablelink">{{ item.item_id }}</a>
+                        </td>
+                        <td class="table-cel">
+                            <a href="#" class="tablelink">{{ item.description }}</a>
+                        </td>
+                        <td class="table-cel">
+                            <a href="#" class="tablelink">{{ item.is_available }}</a>
+                        </td>
+                        <td class="table-cel">
+                            <a href="#" class="tablelink">{{ item.owner }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </div>
+    </main>
+{% endblock content %}
