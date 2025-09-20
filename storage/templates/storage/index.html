@@ -1,12 +1,23 @@
 {% extends "global/base.html" %}
 {% load bootstrap_icons %}
+{% load static %}
 
 {% block content %}
-    <header>
-        <div class="list-icon">{% bs_icon 'list' %}</div>
-        <h1>Storage</h1>
-        <input type="search" id="search" placeholder="Search">
-        <div class="person-circle-icon">{% bs_icon 'person-circle' %}</div>
+    <header class="header">
+        <div class="menu">
+            <i>{% bs_icon 'list' %}</i>
+            <a id="logo" href="#">
+                <img id="logo-image"
+                     src="{% static "media/pictures/new-logo.svg" %}"
+                     alt="Logo Storage">
+                <h1>Warehouse</h1>
+            </a>
+        </div>
+        <div class="search-bar">
+            <span><i>{% bs_icon 'search' %}</i></span>
+            <input type="search" id="search" placeholder="Search">
+        </div>
+        <a href="#">{% bs_icon 'person-circle' %}</a>
     </header>
     <main>
         <div class="responsive-table">
