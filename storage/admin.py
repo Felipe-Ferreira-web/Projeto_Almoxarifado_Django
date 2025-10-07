@@ -9,10 +9,10 @@ from storage import models
 class ItemAdmin(admin.ModelAdmin):
     list_display = (
         "item_id",
-        "description",
+        "name",
         "is_available",
         "created_date",
     )
     ordering = ("-item_id",)
-    search_fields = ("item_id", "description")
+    search_fields = ("item_id", "name")
     list_per_page = 20
