@@ -4,35 +4,41 @@
 
 {% block content %}
     <header class="header">
+
         <div class="menu">
-            <i>{% bs_icon 'list' %}</i>
+
+            <i id="bs_icon">{% bs_icon 'list' %}</i>
+
             <a id="logo" href="#">
                 <img id="logo-image"
                      src="{% static "media/pictures/new-logo.svg" %}"
                      alt="Logo Storage">
+
                 <h1>Warehouse</h1>
             </a>
         </div>
-        <div class="search-bar">
-            <span><i>{% bs_icon 'search' %}</i></span>
-            <input type="search" id="search" placeholder="Search">
-        </div>
+
         <a href="#">{% bs_icon 'person-circle' %}</a>
     </header>
+
     <main>
         <div class="responsive-table">
 
-            <div class="caption-container">
+            <div class="table-">
                 <h3 class="table-caption">Items</h3>
+                <div class="search-bar">
+                    <span><i>{% bs_icon 'search' %}</i></span>
+                    <input type="search" id="search" placeholder="Search">
+                </div>
             </div>
 
             <div class="internal-table">
                 <div class="thead">
-                    <p class="table-header">ID</p>
-                    <p class="table-header">Object</p>
-                    <p class="table-header">Owner</p>
-                    <p class="table-header">Disponibility</p>
-                    <p class="table-header">Description</p>
+                    <p class="table-head">ID</p>
+                    <p class="table-head">Object</p>
+                    <p class="table-head">Owner</p>
+                    <p class="table-head">Disponibility</p>
+                    <p class="table-head">Description</p>
                 </div>
 
                 <div class="tbody">
