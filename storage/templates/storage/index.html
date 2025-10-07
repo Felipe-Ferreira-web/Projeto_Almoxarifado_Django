@@ -21,37 +21,42 @@
     </header>
     <main>
         <div class="responsive-table">
-            <caption class="table-caption">
-                Items
-            </caption>
 
-            <thead>
-                <tr class="table-row-header">
-                    <th class="table-header">ID</th>
-                    <th class="table-header">Description</th>
-                    <th class="table-header">Is Available</th>
-                    <th class="table-header">Owner</th>
-                </tr>
-            </thead>
+            <div class="caption-container">
+                <h3 class="table-caption">Items</h3>
+            </div>
 
-            <tbody>
-                {% for item in items %}
-                    <tr class="table-row">
-                        <td class="table-cel">
-                            <a href="#" class="tablelink">{{ item.item_id }}</a>
-                        </td>
-                        <td class="table-cel">
-                            <a href="#" class="tablelink">{{ item.description }}</a>
-                        </td>
-                        <td class="table-cel">
-                            <a href="#" class="tablelink">{{ item.is_available }}</a>
-                        </td>
-                        <td class="table-cel">
-                            <a href="#" class="tablelink">{{ item.owner }}</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
+            <div class="internal-table">
+                <div class="thead">
+                    <p class="table-header">ID</p>
+                    <p class="table-header">Object</p>
+                    <p class="table-header">Owner</p>
+                    <p class="table-header">Disponibility</p>
+                    <p class="table-header">Description</p>
+                </div>
+
+                <div class="tbody">
+                    {% for item in items %}
+                        <div class="table-row">
+                            <p class="table-cel">
+                                <a href="#" class="table-link">{{ item.item_id }}</a>
+                            </p>
+                            <p class="table-cel">
+                                <a href="#" class="table-link">{{ item.name }}</a>
+                            </p>
+                            <p class="table-cel">
+                                <a href="#" class="table-link">{{ item.owner_id }}</a>
+                            </p>
+                            <p class="table-cel">
+                                <a href="#" class="table-link">{{ item.is_available }}</a>
+                            </p>
+                            <p class="table-cel">
+                                <a href="#" class="table-link">{{ item.description }}</a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </main>
 {% endblock content %}
