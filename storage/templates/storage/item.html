@@ -1,0 +1,31 @@
+{% extends "global/base.html" %}
+{% block content %}
+
+    {% include "global/partials/header.html" %}
+
+    <div class="responsive-table">
+        <div class="single-item">
+            <h1 class="single-item-name">{{ item.item_id }} – {{ item.name }}</h1>
+            <p class="about">{{ item.description }}</p>
+        </div>
+
+        <p>
+            <b>ID: </b>{{ item_id }}
+        </p>
+        <p>
+            <b>Quantity: </b>{{ item.quantity }}
+        </p>
+        <p>
+            <b>Storage location: </b>{{ item.storage_location }}
+        </p>
+        <p>
+            <b>is Available: </b>{{ item.is_available }}
+        </p>
+        <p>
+            <b>Created Date: </b>{{ item.created_date }}
+        </p>
+        <p>
+            <b>Owner: </b>{{ item.owner_id }}
+        </p>
+    </div>
+{% endblock content %}
