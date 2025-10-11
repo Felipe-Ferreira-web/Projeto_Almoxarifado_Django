@@ -1,0 +1,20 @@
+{% load bootstrap_icons %}
+{% load static %}
+
+<header class="header">
+
+    <div class="menu">
+
+        <i id="bs_icon">{% bs_icon 'list' %}</i>
+
+        <a id="logo" href="{% url "items:index" %}">
+            <img id="logo-image"
+                 src="{% static "media/pictures/new-logo.svg" %}"
+                 alt="Logo Storage">
+
+            <h1>Warehouse</h1>
+        </a>
+    </div>
+
+    <a href="#">{% bs_icon 'person-circle' %}</a>
+</header>
