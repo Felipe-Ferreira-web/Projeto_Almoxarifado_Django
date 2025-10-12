@@ -27,7 +27,6 @@ a {
 body {
     background-color: var(--color-gray2);
     font-family: Arial, Helvetica, sans-serif;
-    padding-bottom: 800px
 }
 
 /* header */
@@ -38,7 +37,7 @@ body {
     align-items: center;
     flex-wrap: wrap;
     box-shadow: 1px 1px 4px var(--color-gray1);
-    background-color: var(--color-gray3);
+    background-color: var(--color-gray4);
     padding: 20px;
     font-family: 'Lexend';
 }
@@ -74,7 +73,7 @@ body {
 .responsive-table {
     max-width: 85%;
     margin: 1rem auto;
-    padding: 1rem 1rem 2rem;
+    padding: 1rem 1rem 1rem;
     background-color: var(--color-gray4);
     color: var(--color-white);
     border-radius: var(--border-radius-default);
@@ -127,6 +126,7 @@ body {
     }
 
 /* in-table-info */
+
 .internal-table {
     display: flex;
     flex-direction: column;
@@ -140,7 +140,7 @@ body {
     background-color: var(--color-gray2);
     border-radius: var(--border-radius-default);
     font-weight: bold;
-    margin-top: 1rem;
+    margin: 1rem 0 0.5rem 0;
     font-size: 20px;
     width: 100%;
 }
@@ -163,7 +163,7 @@ body {
     font-size: 20px;
 }
 
-.table-row:nth-child(even) {
+.table-row:nth-child(odd) {
     background-color: var(--color-gray3);
     border-radius: var(--border-radius-default);
 }
@@ -191,8 +191,74 @@ body {
     text-decoration: none;
 }
 
-.table-cel:hover{
+.table-cel:nth-child(1):hover,
+.table-cel:nth-child(3):hover{
     text-decoration: underline;
     text-overflow: clip;
 }
 
+/* single-item */
+
+.single-item-table {
+    text-align: left;
+    margin: 1rem 0 0 3rem;
+}
+
+.single-item-table-margin {
+    margin: 2rem 0 730px 0
+}
+
+.description {
+    margin: 0.5rem 0 0 1.5rem;
+}
+
+.single-item-info {
+    margin: 2rem 0 0 1.5rem;
+}
+
+.single-item-details {
+    margin-top: 0.5rem;
+}
+
+/* footer */
+
+.footer {
+    background-color: var(--color-gray4);
+    display: flex;
+    flex-direction: column;
+    bottom: 0;
+    height: 200px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-caption {
+    margin: 1rem 0 0 25px;
+}
+
+.pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 0 0;
+  font-size: 20px;
+}
+
+.pagination .step-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.pagination .step-links a {
+  color: var(--white-gray);
+  transition: color var(--color-gray4) ease-in-out;
+  text-decoration: none;
+  display: block;
+}
+
+.pagination .step-links a:hover{
+    text-decoration: underline;
+    color: var(--color-gray2);
+    transition: 0.2s;
+}
