@@ -41,7 +41,7 @@ if __name__ == "__main__":
     fake.add_provider(StorageProvider)
 
     for _ in range(NUMBER_OF_OBJECTS):
-        name = fake.random_object_name()
+        object = fake.random_object_name()
         description = fake.text(max_nb_chars=70)
         quantity = random.randint(1, 10)
         storage_location = fake.random_storage_location()
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         created_date = datetime = fake.date_this_year()
         django_storage.append(
             Item(
-                name=name,
+                object=object,
                 description=description,
                 quantity=quantity,
                 storage_location=storage_location,

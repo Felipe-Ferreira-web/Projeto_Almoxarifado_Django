@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class Item(models.Model):
     item_id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=15)
+    object = models.CharField(max_length=15)
     description = models.CharField(max_length=100, blank=True, null=True)
     quantity = models.IntegerField(default=1)
     storage_location = models.CharField(blank=True)

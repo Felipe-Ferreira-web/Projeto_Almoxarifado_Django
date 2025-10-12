@@ -35,7 +35,7 @@ def search(request):
 
     items = Item.objects.filter(
         Q(item_id__icontains=search_value)
-        | Q(name__icontains=search_value)
+        | Q(object__icontains=search_value)
         | Q(owner_id__username__icontains=search_value)
         | Q(description__icontains=search_value)
         | Q(storage_location__icontains=search_value)
