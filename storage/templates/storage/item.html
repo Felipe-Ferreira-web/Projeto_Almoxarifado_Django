@@ -3,29 +3,43 @@
 
     {% include "global/partials/header.html" %}
 
-    <div class="responsive-table">
-        <div class="single-item">
-            <h1 class="single-item-name">{{ item.item_id }} – {{ item.name }}</h1>
-            <p class="about">{{ item.description }}</p>
-        </div>
+    <div class="single-item-table-margin">
+        <div class="responsive-table">
 
-        <p>
-            <b>ID: </b>{{ item_id }}
-        </p>
-        <p>
-            <b>Quantity: </b>{{ item.quantity }}
-        </p>
-        <p>
-            <b>Storage location: </b>{{ item.storage_location }}
-        </p>
-        <p>
-            <b>is Available: </b>{{ item.is_available }}
-        </p>
-        <p>
-            <b>Created Date: </b>{{ item.created_date }}
-        </p>
-        <p>
-            <b>Owner: </b>{{ item.owner_id }}
-        </p>
+            <div class="single-item-table">
+                <div class="single-item">
+                    <h1 class="single-item-name">• {{ item.item_id }} – {{ item.name }}</h1>
+                    <div class="description">
+                        <p>
+                            <b>Description: </b> {{ item.description }}
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="single-item-info">
+                    <p class="single-item-details">
+                        <b>ID: </b>{{ item.item_id }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>Quantity: </b>{{ item.quantity }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>Storage location: </b>{{ item.storage_location }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>Disponibility: </b>{{ item.is_available }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>Created Date: </b>{{ item.created_date }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>Owner: </b>{{ item.owner_id }}
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
+
+    {% include "global/partials/footer.html" %}
 {% endblock content %}
