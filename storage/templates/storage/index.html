@@ -4,8 +4,6 @@
 
 {% block content %}
 
-    {% include "global/partials/header.html" %}
-
     {% if page_obj %}
         <main>
             <div class="responsive-table">
@@ -26,7 +24,7 @@
                         <p class="table-head">Object</p>
                         <p class="table-head">Owner</p>
                         <p class="table-head">Disponibility</p>
-                        <p class="table-head">Description</p>
+                        <p class="table-head">Location</p>
                     </div>
 
                     <div class="tbody">
@@ -36,7 +34,7 @@
                                     <a href="{% url "items:item" item.item_id %}" class="table-link">{{ item.item_id }}</a>
                                 </p>
                                 <p class="table-cel">
-                                    <a class="table-link">{{ item.name }}</a>
+                                    <a class="table-link">{{ item.object }}</a>
                                 </p>
                                 <p class="table-cel">
                                     <a href="#" class="table-link">{{ item.owner_id }}</a>
@@ -45,7 +43,7 @@
                                     <a class="table-link">{{ item.is_available }}</a>
                                 </p>
                                 <p class="table-cel">
-                                    <a class="table-link">{{ item.description }}</a>
+                                    <a class="table-link">{{ item.storage_location }}</a>
                                 </p>
                             </div>
                         {% endfor %}
@@ -53,7 +51,6 @@
                 </div>
                 {% include "global/partials/pagination.html" %}
             </div>
-            {% include "global/partials/footer.html" %}
         </main>
     {% else %}
         <div class="single-item-table-margin">
