@@ -1,13 +1,18 @@
 from django.shortcuts import render, get_list_or_404, redirect
 from django.db.models import Q
 from storage.models import Item
+from django.core.paginator import Paginator
 
 
 def index(request):
 
-    items = Item.objects.order_by("-item_id")[:14]
+    items = Item.objects.order_by("-item_id")
 
-    context = {"items": items, "site_title": "Items - "}
+    paginator = Paginator(items, 13)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {"page_obj": page_obj, "site_title": "Items - "}
 
     return render(request, "storage/index.html", context)
 
@@ -31,6 +36,7 @@ def search(request):
     items = Item.objects.filter(
         Q(item_id__icontains=search_value)
         | Q(name__icontains=search_value)
+        | Q(owner_id__username__icontains=search_value)
         | Q(description__icontains=search_value)
         | Q(storage_location__icontains=search_value)
         | Q(created_date__icontains=search_value)
