@@ -6,12 +6,13 @@ from django.contrib.auth.models import User
 
 
 class Item(models.Model):
+
     item_id = models.BigAutoField(primary_key=True)
-    object = models.CharField(max_length=15)
-    description = models.CharField(max_length=100, blank=True, null=True)
+    object = models.CharField(max_length=20)
+    description = models.CharField()
     quantity = models.IntegerField(default=1)
-    storage_location = models.CharField(blank=True)
-    is_available = models.BooleanField(default=True)
+    storage_location = models.CharField()
+    is_available = models.BooleanField()
     created_date = models.DateTimeField(default=timezone.now)
     owner_id = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
 
