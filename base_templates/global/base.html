@@ -17,11 +17,13 @@
               rel="stylesheet">
     </head>
     <body>
-        {% include "global/partials/header.html" %}
-        {% block content %}
-            <main class="content">
-            </main>
-        {% endblock content %}
-        {% include "global/partials/footer.html" %}
+        <div class="main-content">
+            {% include "global/partials/header.html" %}
+            {% block content %}
+                <main class="content">
+                </main>
+            {% endblock content %}
+            {% include "global/partials/footer.html" %}
+        </div>
     </body>
 </html>
