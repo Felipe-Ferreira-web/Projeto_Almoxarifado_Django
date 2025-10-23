@@ -8,7 +8,7 @@ def index(request):
 
     items = Item.objects.order_by("-item_id")
 
-    paginator = Paginator(items, 13)
+    paginator = Paginator(items, 17)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
