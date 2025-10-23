@@ -10,11 +10,24 @@
 
                 <div class="table-header">
                     <h3 class="table-caption">Items</h3>
-                    <div class="search-bar">
-                        <span><i>{% bs_icon 'search' %}</i></span>
-                        <form action="{% url "items:search" %}" method="GET">
-                            <input type="search" id="search" placeholder="Search" name="q">
-                        </form>
+                    <div class="table-inputs">
+                        <div class="search-bar">
+                            <span>
+                                <i>
+                                    {% bs_icon 'search' %}
+                                </i>
+                            </span>
+                            <form action="{% url "items:search" %}" method="GET">
+                                <input type="search" id="search" placeholder="Search" name="q">
+                            </form>
+                        </div>
+                        <a class="link-btn"
+                           href="{% url "items:create" %}"
+                           caption="Add new Item">
+                            <span>
+                                <i>{% bs_icon 'plus-lg' %}</i>
+                            </span>
+                        </a>
                     </div>
                 </div>
 
