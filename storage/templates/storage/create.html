@@ -1,0 +1,49 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+
+    <div class="form">
+
+        <h2 class="form-name">Create Item</h2>
+
+        <form action
+              "
+              {% url "items:create" %}
+              "
+              method="POST"
+              enctype="multpart/form-data"
+              class="form-content">
+
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                {% if field.name == "is_available" %}
+
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                        {{ field }}
+                        <div class="field-help-text">{{ field.help_text }}</div>
+                        <div class="field-error">{{ field.errors }}</div>
+                    </div>
+
+                {% else %}
+
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                        <div class="field">
+                            {{ field }}
+                            <div class="field-help-text">{{ field.help_text }}</div>
+                        </div>
+                        <div class="field-error">{{ field.errors }}</div>
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+            <button class="btn" type"submit">Create</button>
+        </div>
+    </div>
+</form>
+</div>
+{% endblock content %}
