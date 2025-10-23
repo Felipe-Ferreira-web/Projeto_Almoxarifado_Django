@@ -6,9 +6,13 @@ from django.conf import settings
 app_name = "items"
 
 urlpatterns = [
-    path("<int:item_id>/", views.item, name="item"),
-    path("search/", views.search, name="search"),
     path("", views.index, name="index"),
+    path("search/", views.search, name="search"),
+    # item (CRUD)
+    path("items/<int:item_id>/detail/", views.item, name="item"),
+    path("items/create/", views.create, name="create"),
+    path("items/<int:item_id>/update/", views.update, name="update"),
+    path("items/<int:item_id>/delete/", views.delete, name="delete"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
