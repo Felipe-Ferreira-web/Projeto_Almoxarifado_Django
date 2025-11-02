@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from django import forms
 from storage.models import Item
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class ItemForm(forms.ModelForm):
@@ -60,3 +62,35 @@ class ItemForm(forms.ModelForm):
 
             self.add_error()
             return super().clean()
+
+
+class RegisterForm(UserCreationForm):
+
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+
+        for fieldname in ["username", "password1", "password2"]:
+            self.fields[fieldname].help_text = None
+
+            # self.fields["last_name"].label = "Sobrenome"
+
+    class Meta:
+        model = User
+        fields = (
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "password1",
+            "password2",
+        )
+
+        last_name = forms.CharField(label="Sobrenome")
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+
+        if User.objects.filter(email=email).exists():
+            self.add_error(
+                "email", ValidationError("Este e-mail já existe!", code="invalid")
+            )
