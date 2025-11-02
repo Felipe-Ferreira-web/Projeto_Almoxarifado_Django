@@ -1,0 +1,21 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+    <div class="form">
+        {% if user.is_authenticated %}
+            <h2 class="form-name">Logout</h2>
+
+            <p class="logout-text">
+                You logged as {{ user.username }}.
+                Click <a href="{% url "items:logout" %}">here</a>
+                to exit.
+            </p>
+        {% else %}
+
+            <h2 class="form-name">Login</h2>
+            {% include "storage/partials/user_form.html" %}
+            <button class="btn" type"submit">Login</button>
+
+        {% endif %}
+    </div>
+{% endblock content %}
