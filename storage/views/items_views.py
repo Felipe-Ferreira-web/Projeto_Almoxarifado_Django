@@ -42,6 +42,14 @@ def search(request):
         | Q(created_date__icontains=search_value)
     ).order_by("-item_id")
 
-    context = {"items": items, "site_title": "Search - "}
+    paginator = Paginator(items, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "page_obj": page_obj,
+        "site_title": "Search - ",
+        "search_value": search_value,
+    }
 
     return render(request, "storage/index.html", context)
