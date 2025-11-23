@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 
 from storage.forms import ItemForm
 from storage.models import Item
 
 
+@login_required(login_url="items:login")
 def create(request):
     form_action = reverse("items:create")
 
@@ -14,7 +17,9 @@ def create(request):
         context = {"form": form, "form_action": form_action}
 
         if form.is_valid():
-            item = form.save()
+            item = form.save(commit=False)
+            item.owner = request.user
+            item.save()
             return redirect("items:update", item_id=item.pk)
 
         return render(request, "storage/update.html", context)
@@ -24,6 +29,7 @@ def create(request):
     return render(request, "storage/create.html", context)
 
 
+@login_required(login_url="items:login")
 def update(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
 
@@ -49,6 +55,7 @@ def update(request, item_id):
     return render(request, "storage/update.html", context)
 
 
+@login_required(login_url="items:login")
 def delete(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
 
