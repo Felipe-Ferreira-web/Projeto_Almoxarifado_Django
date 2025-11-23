@@ -14,5 +14,13 @@
         </a>
     </div>
 
-    <a href="#">{% bs_icon 'person-circle' %}</a>
+    {% if user.is_authenticated %}
+        <div class="account-info">
+            <a href="{% url "items:user_owner_profile" %}">Profile {% bs_icon 'person-circle' %}</a>
+        </div>
+    {% else %}
+        <div class="account-info">
+            <a href="{% url "items:register" %}">Sign Up {% bs_icon 'person-circle' %}</a>
+        </div>
+    {% endif %}
 </header>
