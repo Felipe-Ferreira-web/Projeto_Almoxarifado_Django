@@ -3,78 +3,124 @@
 {% load static %}
 
 {% block content %}
+    {% if user.is_authenticated %}
+        {% if page_obj %}
+            <main>
+                <div class="responsive-table">
 
-    {% if page_obj %}
-        <main>
-            <div class="responsive-table">
-
-                <div class="table-header">
-                    <h3 class="table-caption">Items</h3>
-                    <div class="table-inputs">
-                        <div class="search-bar">
-                            <span>
-                                <i>
-                                    {% bs_icon 'search' %}
-                                </i>
-                            </span>
-                            <form action="{% url "items:search" %}" method="GET">
-                                <input type="search" id="search" placeholder="Search" name="q">
-                            </form>
-                        </div>
-                        <a class="link-btn"
-                           href="{% url "items:create" %}"
-                           caption="Add new Item">
-                            <span>
-                                <i>{% bs_icon 'plus-lg' %}</i>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="internal-table">
-                    <div class="thead">
-                        <p class="table-head">ID</p>
-                        <p class="table-head">Object</p>
-                        <p class="table-head">Owner</p>
-                        <p class="table-head">Disponibility</p>
-                        <p class="table-head">Location</p>
-                    </div>
-
-                    <div class="tbody">
-                        {% for item in page_obj %}
-                            <div class="table-row">
-                                <p class="table-cel">
-                                    <a href="{% url "items:item" item.item_id %}" class="table-link">{{ item.item_id }}</a>
-                                </p>
-                                <p class="table-cel">
-                                    <a class="table-link">{{ item.object }}</a>
-                                </p>
-                                <p class="table-cel">
-                                    <a href="#" class="table-link">{{ item.owner_id }}</a>
-                                </p>
-                                <p class="table-cel">
-                                    <a class="table-link">{{ item.is_available }}</a>
-                                </p>
-                                <p class="table-cel">
-                                    <a class="table-link">{{ item.storage_location }}</a>
-                                </p>
+                    <div class="table-header">
+                        <h3 class="table-caption">Items</h3>
+                        <div class="table-inputs">
+                            <div class="search-bar">
+                                <span>
+                                    <i>
+                                        {% bs_icon 'search' %}
+                                    </i>
+                                </span>
+                                <form action="{% url "items:search" %}" method="GET">
+                                    <input type="search" id="search" placeholder="Search" name="q">
+                                </form>
                             </div>
-                        {% endfor %}
+                            <a class="link-btn"
+                               href="{% url "items:create" %}"
+                               caption="Add new Item">
+                                <span>
+                                    <i>{% bs_icon 'plus-lg' %}</i>
+                                </span>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                {% include "global/partials/pagination.html" %}
-            </div>
-        </main>
-    {% else %}
-        <div class="single-item-table-margin">
-            <div class="responsive-table">
 
-                <div class="single-item-table">
-                    <div class="single-item">
-                        <h1 class="single-item-name">• Item não encontrado</h1>
+                    <div class="internal-table">
+                        <div class="thead">
+                            <p class="table-head">ID</p>
+                            <p class="table-head">Object</p>
+                            <p class="table-head">Owner</p>
+                            <p class="table-head">Disponibility</p>
+                            <p class="table-head">Location</p>
+                        </div>
+
+                        <div class="tbody">
+                            {% for item in page_obj %}
+                                <div class="table-row">
+                                    <p class="table-cel">
+                                        <a href="{% url "items:item" item.item_id %}" class="table-link">{{ item.item_id }}</a>
+                                    </p>
+                                    <p class="table-cel">
+                                        <a class="table-link">{{ item.object }}</a>
+                                    </p>
+                                    {% if item.owner %}
+                                        <p class="table-cel">
+                                            <a href="{% url "items:user_profile" item.owner.id %}"
+                                               class="table-link">{{ item.owner.id }}</a>
+                                        {% else %}
+                                            <span>None</span>
+                                        {% endif %}
+                                    </p>
+                                    <p class="table-cel">
+                                        <a class="table-link">{{ item.is_available }}</a>
+                                    </p>
+                                    <p class="table-cel">
+                                        <a class="table-link">{{ item.storage_location }}</a>
+                                    </p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% include "global/partials/pagination.html" %}
+                </div>
+            </main>
+        {% else %}
+            <div class="single-item-table-margin">
+                <div class="responsive-table">
+
+                    <div class="single-item-table">
+                        <div class="single-item">
+                            <h1 class="single-item-name">• Item não encontrado</h1>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
+    {% else %}
+        {% if page_obj %}
+            <main>
+                <div class="responsive-table">
+
+                    <div class="table-header">
+                        <h3 class="table-caption">Items</h3>
+                        <div class="table-inputs">
+                            <div class="search-bar">
+                                <span>
+                                    <i>
+                                        {% bs_icon 'search' %}
+                                    </i>
+                                </span>
+                                <form action="{% url "items:search" %}" method="GET">
+                                    <input type="search" id="search" placeholder="Search" name="q">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="internal-table">
+                        <div class="thead">
+                            <p class="not-logged-message">Login to see and add Items</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        {% else %}
+            <div class="single-item-table-margin">
+                <div class="responsive-table">
+
+                    <div class="single-item-table">
+                        <div class="single-item">
+                            <h1 class="single-item-name">• Item não encontrado</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     {% endif %}
 {% endblock content %}
