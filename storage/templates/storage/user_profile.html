@@ -1,0 +1,54 @@
+{% extends "global/base.html" %}
+{% block content %}
+
+    <div class="single-item-table-margin">
+        <div class="responsive-table">
+
+            <div class="single-item-table">
+                <div class="single-item">
+                    <h1>• {{ user.id }} – {{ user.username }}</h1>
+                </div>
+
+                <div class="single-item-info">
+                    <p class="single-item-details">
+                        <b>ID: </b>{{ user.id }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>First Name: </b>{{ user.first_name }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>Last Name: </b>{{ user.last_name }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>E-mail: </b>{{ user.email }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>Joined In: </b>{{ user.date_joined }}
+                    </p>
+                    <p class="single-item-details">
+                        <b>Last Login </b>{{ user.last_login }}
+                    </p>
+                </div>
+
+                {% if request.user == profile_user %}
+                    <div class="buttons">
+
+                        <a type="button" id="update-button" href="{% url "items:user_update" %}">Update</a>
+
+                        <form action="{% url "items:logout" %}" method="POST">
+                            {% csrf_token %}
+
+                            {% if confirmation == "no" %}
+                                <input type="hidden" name="confirmation" value="yes">
+                                <button type="submit" id="delete-button">Are you Sure?</button>
+
+                            {% else %}
+                                <button type="submit" id="delete-button">Logout</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
