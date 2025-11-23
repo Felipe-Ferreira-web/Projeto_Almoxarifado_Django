@@ -35,24 +35,27 @@
                         <b>Owner: </b>{{ item.owner_id }}
                     </p>
                 </div>
-                <div class="buttons">
 
-                    <a type="button"
-                       id="update-button"
-                       href="{% url "items:update" item.item_id %}">Update</a>
+                {% if user == item.owner %}
+                    <div class="buttons">
 
-                    <form action="{% url "items:delete" item.item_id %}" method="POST">
-                        {% csrf_token %}
+                        <a type="button"
+                           id="update-button"
+                           href="{% url "items:update" item.item_id %}">Update</a>
 
-                        {% if confirmation == "no" %}
-                            <input type="hidden" name="confirmation" value="yes">
-                            <button type="submit" id="delete-button">Are you Sure?</button>
+                        <form action="{% url "items:delete" item.item_id %}" method="POST">
+                            {% csrf_token %}
 
-                        {% else %}
-                            <button type="submit" id="delete-button">Delete</button>
-                        {% endif %}
-                    </form>
-                </div>
+                            {% if confirmation == "no" %}
+                                <input type="hidden" name="confirmation" value="yes">
+                                <button type="submit" id="delete-button">Are you Sure?</button>
+
+                            {% else %}
+                                <button type="submit" id="delete-button">Delete</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
