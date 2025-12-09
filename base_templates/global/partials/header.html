@@ -16,7 +16,7 @@
 
     {% if user.is_authenticated %}
         <div class="account-info">
-            <a href="{% url "items:user_owner_profile" %}">Profile {% bs_icon 'person-circle' %}</a>
+            <a href="{% url "items:user_profile" user.id %}">Profile {% bs_icon 'person-circle' %}</a>
         </div>
     {% else %}
         <div class="account-info">
