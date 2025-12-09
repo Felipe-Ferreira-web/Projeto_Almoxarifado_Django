@@ -3,6 +3,20 @@ from storage import views
 from django.conf.urls.static import static
 from django.conf import settings
 
+"""
+URL configuration for the 'storage' application, namespaced as 'items'.
+
+Defines the routing paths for all major application functionalities, 
+including:
+1. General views (index, search).
+2. Item management (CRUD operations: create, detail, update, delete).
+3. User authentication (register, login, logout, update, profile viewing).
+4. Transaction handling (viewing history and processing loans/devolutions).
+
+The urlpatterns list also includes configuration for serving media files in 
+development environments.
+"""
+
 app_name = "items"
 
 urlpatterns = [
@@ -20,7 +34,13 @@ urlpatterns = [
     path("user/update/", views.user_update, name="user_update"),
     # user (view)
     path("user/profile/<int:user_id>/detail/", views.user_profile, name="user_profile"),
-    path("user/profile/", views.user_owner_profile, name="user_owner_profile"),
+    # transactions
+    path("transactions", views.Transactions, name="transactions"),
+    path(
+        "loan/<int:item_id>/",
+        views.ItemTransaction,
+        name="transaction",
+    ),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
