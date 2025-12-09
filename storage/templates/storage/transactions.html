@@ -1,0 +1,84 @@
+{% extends "global/base.html" %}
+{% load bootstrap_icons %}
+{% load static %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if page_obj %}
+            <div class="responsive-table">
+
+                <div class="table-header">
+                    <h3 class="table-caption">Transactions</h3>
+                    <div class="table-inputs">
+                        <div class="search-bar">
+                            <span>
+                                <i>
+                                    {% bs_icon 'search' %}
+                                </i>
+                            </span>
+                            <form action="{% url "items:search" %}" method="GET">
+                                <input type="search" id="search" placeholder="Search" name="q">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                {% include "storage/partials/transaction_table.html" %}
+
+            </div>
+        {% else %}
+            <div class="single-item-table-margin">
+                <div class="responsive-table">
+
+                    <div class="single-item-table">
+                        <div class="single-item">
+                            <h1 class="single-item-name">• Item não encontrado</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+
+        <div class="responsive-table">
+
+            <div class="table-header">
+                <h3 class="table-caption">Transactions</h3>
+                <div class="table-inputs">
+                    <div class="search-bar">
+                        <span>
+                            <i>
+                                {% bs_icon 'search' %}
+                            </i>
+                        </span>
+                        <form action="{% url "items:search" %}" method="GET">
+                            <input type="search" id="search" placeholder="Search" name="q">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="internal-table">
+                <div class="thead">
+                    <p class="not-logged-message">Login to see and add Items</p>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+    <div class="responsive-table">
+        <div class="thead">Tables</div>
+        <div class="tbody">
+            <div class="table-row">
+                <div class="table-cel">
+                    <a href="{% url "items:index" %}">Items</a>
+                </div>
+                <div class="table-cel">
+                    <a href="{% url "items:transactions" %}">Transactions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

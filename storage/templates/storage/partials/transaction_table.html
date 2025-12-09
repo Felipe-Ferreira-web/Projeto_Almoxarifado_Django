@@ -1,0 +1,49 @@
+
+<div class="internal-table">
+    <div class="thead">
+        <p class="table-head">ID</p>
+        <p class="table-head">Item ID</p>
+        <p class="table-head">Object</p>
+        <p class="table-head">From User</p>
+        <p class="table-head">To User</p>
+    </div>
+
+    <div class="tbody">
+        {% for transaction in page_obj %}
+            <div class="table-row">
+                <p class="table-cel">
+                    <a class="table-link">{{ transaction.id }}</a>
+                </p>
+                <p class="table-cel">
+                    <a class="table-link">{{ transaction.item.item_id }}</a>
+                </p>
+                <p class="table-cel">
+                    <a class="table-link">{{ transaction.item.object }}</a>
+                </p>
+                <p class="table-cel">
+                    <a class="table-link">{{ transaction.from_user.id }}</a>
+                </p>
+                <p class="table-cel">
+                    <a class="table-link">{{ transaction.to_user.id }}</a>
+                </p>
+
+                {% if item.owner %}
+                    {% if item.is_available and item.owner != request.user %}
+                        <form action="{% url "items:transaction" item.item_id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" id="delete-button">Loan</button>
+                        </form>
+                    {% endif %}
+
+                    {% if not item.is_available and item.current_user == request.user %}
+                        <form action="{% url "items:transaction" item.item_id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" id="delete-button">Return</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% include "global/partials/pagination.html" %}
