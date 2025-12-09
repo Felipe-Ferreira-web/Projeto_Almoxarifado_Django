@@ -1,12 +1,23 @@
 {% extends "global/base.html" %}
 
 {% block content %}
-    <div class="form">
-        <h2 class="form-name">Register</h2>
+    {% if user.is_authenticated %}
+        <div class="responsive-table">
+            <h2 class="form-name">Logout</h2>
 
-        <a type="button" id="update-button" href="{% url "items:login" %}">Login</a>
+            <p class="logout-text">
+                You are logged as {{ user.username }}.
+                Click <a href="{% url "items:logout" %}">here</a>
+                to exit.
+            </p>
+        </div>
+    {% else %}
+        <div class="form">
+            <h2 class="form-name">Register</h2>
 
-        {% include "storage/partials/user_form.html" %}
-        <button class="btn" type"submit">Create</button>
-    </div>
+            {% include "storage/partials/user_form.html" %}
+            <button class="btn" type"submit">Create</button>
+            <a type="button" id="update-button" href="{% url "items:login" %}">Login</a>
+        </div>
+    {% endif %}
 {% endblock content %}

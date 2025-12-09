@@ -1,10 +1,23 @@
 {% extends "global/base.html" %}
 
 {% block content %}
-    <div class="form">
-        <h2 class="form-name">Update User</h2>
 
-        {% include "storage/partials/user_form.html" %}
-        <button class="btn" type"submit">Update</button>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="form">
+            <h2 class="form-name">Update User</h2>
+
+            {% include "storage/partials/user_form.html" %}
+            <button class="btn" type"submit">Update</button>
+        </div>
+
+    {% else %}
+
+        <h2 class="form-name">Login or Register</h2>
+
+        <p class="logout-text">
+            You ure currently not logged in.
+            Click <a href="{% url "items:login" %}">here</a>
+            to login.
+        </p>
+    {% endif %}
 {% endblock content %}

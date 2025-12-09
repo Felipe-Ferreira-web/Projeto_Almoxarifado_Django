@@ -6,7 +6,7 @@
             <h2 class="form-name">Logout</h2>
 
             <p class="logout-text">
-                You logged as {{ user.username }}.
+                You are logged as {{ user.username }}.
                 Click <a href="{% url "items:logout" %}">here</a>
                 to exit.
             </p>
@@ -15,6 +15,7 @@
             <h2 class="form-name">Login</h2>
             {% include "storage/partials/user_form.html" %}
             <button class="btn" type"submit">Login</button>
+            <a type="button" id="delete-button" href="{% url "items:register" %}">Register</a>
 
         {% endif %}
     </div>
