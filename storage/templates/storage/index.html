@@ -3,74 +3,90 @@
 {% load static %}
 
 {% block content %}
+
     {% if user.is_authenticated %}
+
         {% if page_obj %}
-            <main>
-                <div class="responsive-table">
 
-                    <div class="table-header">
-                        <h3 class="table-caption">Items</h3>
-                        <div class="table-inputs">
-                            <div class="search-bar">
-                                <span>
-                                    <i>
-                                        {% bs_icon 'search' %}
-                                    </i>
-                                </span>
-                                <form action="{% url "items:search" %}" method="GET">
-                                    <input type="search" id="search" placeholder="Search" name="q">
-                                </form>
-                            </div>
-                            <a class="link-btn"
-                               href="{% url "items:create" %}"
-                               caption="Add new Item">
-                                <span>
-                                    <i>{% bs_icon 'plus-lg' %}</i>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
+            <div class="responsive-table">
 
-                    <div class="internal-table">
-                        <div class="thead">
-                            <p class="table-head">ID</p>
-                            <p class="table-head">Object</p>
-                            <p class="table-head">Owner</p>
-                            <p class="table-head">Disponibility</p>
-                            <p class="table-head">Location</p>
-                        </div>
+                <div class="table-header">
 
-                        <div class="tbody">
-                            {% for item in page_obj %}
-                                <div class="table-row">
-                                    <p class="table-cel">
-                                        <a href="{% url "items:item" item.item_id %}" class="table-link">{{ item.item_id }}</a>
-                                    </p>
-                                    <p class="table-cel">
-                                        <a class="table-link">{{ item.object }}</a>
-                                    </p>
-                                    {% if item.owner %}
-                                        <p class="table-cel">
-                                            <a href="{% url "items:user_profile" item.owner.id %}"
-                                               class="table-link">{{ item.owner.id }}</a>
-                                        {% else %}
-                                            <span>None</span>
-                                        {% endif %}
-                                    </p>
-                                    <p class="table-cel">
-                                        <a class="table-link">{{ item.is_available }}</a>
-                                    </p>
-                                    <p class="table-cel">
-                                        <a class="table-link">{{ item.storage_location }}</a>
-                                    </p>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% include "global/partials/pagination.html" %}
+                    <h3 class="table-caption">Items</h3>
+
+                    {% include "storage/partials/search_bar.html" %}
+
                 </div>
-            </main>
+
+                <div class="internal-table">
+                    <div class="thead">
+                        <p class="table-head">ID</p>
+                        <p class="table-head">Object</p>
+                        <p class="table-head">Owner</p>
+                        <p class="table-head">Disponibility</p>
+                    </div>
+
+                    <div class="tbody">
+
+                        {% for item in page_obj %}
+
+                            <div class="table-row">
+                                <p class="table-cel">
+                                    <a href="{% url "items:item" item.item_id %}" class="table-link">{{ item.item_id }}</a>
+                                </p>
+
+                                <p class="table-cel">
+                                    <a class="table-link">{{ item.object }}</a>
+                                </p>
+
+                                {% if item.owner %}
+                                    <p class="table-cel">
+                                        <a href="{% url "items:user_profile" item.owner.id %}"
+                                           class="table-link">{{ item.owner.id }}</a>
+                                    </p>
+
+                                {% else %}
+
+                                    <p class="table-cel">
+                                        <a class="table-link">None</a>
+                                    </p>
+
+                                {% endif %}
+
+                                <p class="table-cel">
+                                    <a class="table-link">{{ item.is_available }}</a>
+                                </p>
+
+                                {% if item.owner %}
+
+                                    {% if item.is_available and item.owner != request.user %}
+                                        <form action="{% url "items:transaction" item.item_id %}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" id="delete-button">Loan</button>
+                                        </form>
+                                    {% endif %}
+
+                                    {% if not item.is_available and item.current_user == request.user %}
+                                        <form action="{% url "items:transaction" item.item_id %}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" id="delete-button">Return</button>
+                                        </form>
+                                    {% endif %}
+
+                                {% endif %}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                {% include "global/partials/pagination.html" %}
+
+            </div>
+
         {% else %}
+
             <div class="single-item-table-margin">
                 <div class="responsive-table">
 
@@ -81,46 +97,50 @@
                     </div>
                 </div>
             </div>
+
         {% endif %}
+
     {% else %}
-        {% if page_obj %}
-            <main>
-                <div class="responsive-table">
 
-                    <div class="table-header">
-                        <h3 class="table-caption">Items</h3>
-                        <div class="table-inputs">
-                            <div class="search-bar">
-                                <span>
-                                    <i>
-                                        {% bs_icon 'search' %}
-                                    </i>
-                                </span>
-                                <form action="{% url "items:search" %}" method="GET">
-                                    <input type="search" id="search" placeholder="Search" name="q">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+        <div class="responsive-table">
 
-                    <div class="internal-table">
-                        <div class="thead">
-                            <p class="not-logged-message">Login to see and add Items</p>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        {% else %}
-            <div class="single-item-table-margin">
-                <div class="responsive-table">
-
-                    <div class="single-item-table">
-                        <div class="single-item">
-                            <h1 class="single-item-name">• Item não encontrado</h1>
-                        </div>
+            <div class="table-header">
+                <h3 class="table-caption">Items</h3>
+                <div class="table-inputs">
+                    <div class="search-bar">
+                        <span>
+                            <i>
+                                {% bs_icon 'search' %}
+                            </i>
+                        </span>
+                        <form action="{% url "items:search" %}" method="GET">
+                            <input type="search" id="search" placeholder="Search" name="q">
+                        </form>
                     </div>
                 </div>
             </div>
-        {% endif %}
+
+            <div class="internal-table">
+                <div class="thead">
+                    <p class="not-logged-message">Login to see and add Items</p>
+                </div>
+            </div>
+        </div>
+
     {% endif %}
+
+    <div class="responsive-table">
+        <div class="thead">Tables</div>
+        <div class="tbody">
+            <div class="table-row">
+                <div class="table-cel">
+                    <a href="{% url "items:index" %}">Items</a>
+                </div>
+                <div class="table-cel">
+                    <a href="{% url "items:transactions" %}">Transactions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock content %}
