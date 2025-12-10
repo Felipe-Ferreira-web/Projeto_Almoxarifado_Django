@@ -35,6 +35,11 @@
                         <p class="single-item-details">
                             <b>Owner ID: </b>{{ item.owner_id }}
                         </p>
+
+                        <p class="single-item-details">
+                            <b>Current Holder ID: </b>{{ item.current_user.id }}
+                        </p>
+
                     </div>
 
                     {% if user == item.owner %}
