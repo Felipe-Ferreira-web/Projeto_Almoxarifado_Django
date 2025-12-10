@@ -36,9 +36,11 @@
                             <b>Owner ID: </b>{{ item.owner_id }}
                         </p>
 
-                        <p class="single-item-details">
-                            <b>Current Holder ID: </b>{{ item.current_user.id }}
-                        </p>
+                        {% if item.current_user %}
+                            <p class="single-item-details">
+                                <b>Current Holder ID: </b>{{ item.current_user.id }}
+                            </p>
+                        {% endif %}
 
                     </div>
 
