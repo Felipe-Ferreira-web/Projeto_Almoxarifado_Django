@@ -3,16 +3,13 @@
 
 <header class="header">
 
-    <div class="menu">
+    <a id="logo" href="{% url "items:index" %}">
+        <img id="logo-image"
+             src="{% static "media/pictures/newest-logo.svg" %}"
+             alt="Logo Storage">
 
-        <a id="logo" href="{% url "items:index" %}">
-            <img id="logo-image"
-                 src="{% static "media/pictures/new-logo.svg" %}"
-                 alt="Logo Storage">
-
-            <h1>Warehouse</h1>
-        </a>
-    </div>
+        <h1>Warehouse</h1>
+    </a>
 
     {% if user.is_authenticated %}
         <div class="account-info">

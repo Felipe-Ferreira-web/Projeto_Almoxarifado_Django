@@ -38,14 +38,7 @@
 
                             <form action="{% url "items:logout" %}" method="POST">
                                 {% csrf_token %}
-
-                                {% if confirmation == "no" %}
-                                    <input type="hidden" name="confirmation" value="yes">
-                                    <button type="submit" id="delete-button">Are you Sure?</button>
-
-                                {% else %}
-                                    <button type="submit" id="delete-button">Logout</button>
-                                {% endif %}
+                                <button type="submit" id="delete-button">Logout</button>
                             </form>
                         </div>
                     {% endif %}
