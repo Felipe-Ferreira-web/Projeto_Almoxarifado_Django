@@ -37,7 +37,7 @@ class ItemForm(forms.ModelForm):
         help_text="Mark if you want the item to be available for other users to borrow.",
         initial=True,
         required=False,
-        label="Disponibility",
+        label="Availability",
     )
 
     storage_location = forms.CharField(
