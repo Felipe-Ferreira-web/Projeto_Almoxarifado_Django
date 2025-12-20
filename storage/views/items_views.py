@@ -1,27 +1,39 @@
 from django.shortcuts import render, redirect
-from django.db.models import Q
-from storage.models import Item
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Prefetch
+from storage.models import Item, Transaction
 from django.core.paginator import Paginator
 
 
+@login_required(login_url="items:login")
 def index(request):
     """
-    View to display the objects from Item class.
+    View to display a paginated list of Item objects.
 
-    Fetches all Item objects and orders them descendingly by '-item_id'. Use Paginator to separate the objects into 17 elements per page and use request.get to select a page.
-    Then attributes the pages to page_obj and retrives the value with context.
+    Fetches all Item objects ordered descendingly by '-item_id'. Utilizes
+    'select_related' for one-to-one/foreign key relationships (owner) and
+    'prefetch_related' with a custom Prefetch objects for reverse relationships
+    (transaction_item).
 
     Parameters:
     -----------
     request : HttpRequest
-        The HttpRequest object. Used to retrieve the page number for the pagination parameter("page") from the query string.
+        The HttpRequest object. Used to retrieve the current page number
+        from the query string parameter ("page").
 
     Returns:
     --------
     HttpResponse:
-        -Renders 'storage/index.html' and loads the context and site_title (GET)
+        Renders 'storage/index.html' with a context containing the
+        paginated items (page_obj) and the site_title.
     """
-    items = Item.objects.order_by("-item_id")
+    transactions_queryset = Transaction.objects.select_related("to_user")
+
+    items = (
+        Item.objects.select_related("owner")
+        .prefetch_related(Prefetch("transaction_item", queryset=transactions_queryset))
+        .order_by("-item_id")
+    )
 
     paginator = Paginator(items, 17)
     page_number = request.GET.get("page")
@@ -32,6 +44,7 @@ def index(request):
     return render(request, "storage/index.html", context)
 
 
+@login_required(login_url="items:login")
 def item(request, item_id):
     """
     View to display data about a single item.
@@ -60,6 +73,7 @@ def item(request, item_id):
     return render(request, "storage/item.html", context)
 
 
+@login_required(login_url="items:login")
 def search(request):
     """
     View to manage the search feature.
@@ -86,10 +100,10 @@ def search(request):
     items = Item.objects.filter(
         Q(item_id__icontains=search_value)
         | Q(object__icontains=search_value)
-        | Q(owner_id__username__icontains=search_value)
-        | Q(description__icontains=search_value)
-        | Q(storage_location__icontains=search_value)
-        | Q(created_date__icontains=search_value)
+        # | Q(owner__icontains=search_value)
+        # | Q(description__icontains=search_value)
+        # | Q(storage_location__icontains=search_value)
+        # | Q(created_date__icontains=search_value)
     ).order_by("-item_id")
 
     paginator = Paginator(items, 10)
