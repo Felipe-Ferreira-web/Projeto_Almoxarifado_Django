@@ -58,14 +58,14 @@ def ItemTransaction(request, item_id):
     Returns:
     --------
     HttpResponse:
-        -Redirects to 'items:user_profile' if the request method is not POST (Integrity Check).
-        -Redirects to 'items:user_profile' if the Loan Transaction succeed.
-        -Redirects to 'items:index' if the Devolution Transaction succeed.
-        -Redirects to 'items:user_profile' if Devolution fails.
+        -Redirects to 'items:index' if the request method is not POST (Integrity Check).
+        -Redirects to 'items:item' if the Loan Transaction succeed.
+        -Redirects to 'items:item' if the Devolution Transaction succeed.
+        -Redirects to 'items:index' if Devolution fails.
     """
 
     if request.method != "POST":
-        return redirect("items:user_profile", user_id=request.user.id)
+        return redirect("items:index", user_id=request.user.id)
 
     item = get_object_or_404(Item, pk=item_id)
 
@@ -82,8 +82,8 @@ def ItemTransaction(request, item_id):
 
         item.save()
 
-        messages.success(request, "Transaction succeeded!")
-        return redirect("items:user_profile", user_id=request.user.id)
+        messages.success(request, "Loan succeeded!")
+        return redirect("items:item", item_id=item_id)
 
     else:
         active_loan = (
@@ -108,6 +108,6 @@ def ItemTransaction(request, item_id):
             item.save()
 
             messages.success(request, "Devolution succeeded!")
-            return redirect("items:index")
+            return redirect("items:item", item_id=item_id)
 
     return redirect("items:user_profile", user_id=request.user.id)
