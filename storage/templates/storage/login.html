@@ -1,9 +1,9 @@
 {% extends "global/base.html" %}
 
 {% block content %}
-    <div class="form">
+    <div class="login-form">
         {% if user.is_authenticated %}
-            <h2 class="form-name">Logout</h2>
+            <h2 class="title">Logout</h2>
 
             <p class="logout-text">
                 You are logged as {{ user.username }}.
@@ -12,10 +12,16 @@
             </p>
         {% else %}
 
-            <h2 class="form-name">Login</h2>
+            <h2 class="title">Login</h2>
+
             {% include "storage/partials/user_form.html" %}
+
             <button class="btn" type"submit">Login</button>
-            <a type="button" id="delete-button" href="{% url "items:register" %}">Register</a>
+
+            <div class="sign-up-container">
+                <p>If this is your first time here! Click here to</p>
+                <a type="button" href="{% url "items:register" %}">Sign Up.</a>
+            </div>
 
         {% endif %}
     </div>
