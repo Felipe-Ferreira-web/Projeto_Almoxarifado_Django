@@ -3,27 +3,24 @@
 {% load static %}
 
 {% block content %}
-
-    {% if user.is_authenticated %}
+    <main class="main-container">
+        {% include "global/partials/messages.html" %}
 
         {% if page_obj %}
 
-            <div class="responsive-table">
+            <h3 class="table-caption">Items</h3>
 
-                <div class="table-header">
+            <div class="items-table">
 
-                    <h3 class="table-caption">Items</h3>
-
-                    {% include "storage/partials/search_bar.html" %}
-
-                </div>
+                <div class="table-header">{% include "global/partials/search_bar.html" %}</div>
 
                 <div class="internal-table">
                     <div class="thead">
                         <p class="table-head">ID</p>
                         <p class="table-head">Object</p>
                         <p class="table-head">Owner</p>
-                        <p class="table-head">Disponibility</p>
+                        <p class="table-head">Availability</p>
+                        <p class="table-head">Transaction</p>
                     </div>
 
                     <div class="tbody">
@@ -31,46 +28,54 @@
                         {% for item in page_obj %}
 
                             <div class="table-row">
-                                <p class="table-cel">
-                                    <a href="{% url "items:item" item.item_id %}" class="table-link">{{ item.item_id }}</a>
-                                </p>
 
-                                <p class="table-cel">
-                                    <a class="table-link">{{ item.object }}</a>
-                                </p>
+                                <a class="table-link" href="{% url "items:item" item.item_id %}">{{ item.item_id }}</a>
+
+                                <a class="table-link">{{ item.object }}</a>
 
                                 {% if item.owner %}
-                                    <p class="table-cel">
-                                        <a href="{% url "items:user_profile" item.owner.id %}"
-                                           class="table-link">{{ item.owner.id }}</a>
-                                    </p>
-
+                                    <a class="table-link"
+                                       href="{% url "items:user_profile" item.owner.id %}">{{ item.owner.id }}</a>
                                 {% else %}
 
-                                    <p class="table-cel">
-                                        <a class="table-link">None</a>
-                                    </p>
+                                    <a class="table-link">None</a>
 
                                 {% endif %}
 
-                                <p class="table-cel">
-                                    <a class="table-link">{{ item.is_available }}</a>
-                                </p>
+                                <a class="table-link">
+                                    <span class="dot
+                                                 {% if item.is_available %}
+                                                     dot-green
+                                                 {% else %}
+                                                     dot-red
+                                                 {% endif %}"></span>
+                                    {% if item.is_available %}
+                                        Available
+                                    {% else %}
+                                        Occupied
+                                    {% endif %}
+                                </a>
 
                                 {% if item.owner %}
 
                                     {% if item.is_available and item.owner != request.user %}
+
                                         <form action="{% url "items:transaction" item.item_id %}" method="POST">
                                             {% csrf_token %}
-                                            <button type="submit" id="delete-button">Loan</button>
+                                            <button type="submit" class="transaction-btn">
+                                                {% bs_icon 'arrow-down' %}
+                                            </button>
                                         </form>
+
                                     {% endif %}
 
                                     {% if not item.is_available and item.current_user == request.user %}
+
                                         <form action="{% url "items:transaction" item.item_id %}" method="POST">
                                             {% csrf_token %}
-                                            <button type="submit" id="delete-button">Return</button>
+                                            <button type="submit" class="transaction-btn">{% bs_icon 'arrow-up' %}</button>
                                         </form>
+
                                     {% endif %}
 
                                 {% endif %}
@@ -81,66 +86,26 @@
                     </div>
                 </div>
 
-                {% include "global/partials/pagination.html" %}
+                {% if page_obj.paginator.num_pages > 1 %}
+                    {% include "global/partials/pagination.html" %}
+                {% endif %}
 
             </div>
+        </main>
 
-        {% else %}
+    {% else %}
 
-            <div class="single-item-table-margin">
-                <div class="responsive-table">
+        <div class="single-item-table-margin">
+            <div class="responsive-table">
 
-                    <div class="single-item-table">
-                        <div class="single-item">
-                            <h1 class="single-item-name">• Item não encontrado</h1>
-                        </div>
+                <div class="single-item-table">
+                    <div class="single-item">
+                        <h1 class="single-item-name">• Item não encontrado</h1>
                     </div>
                 </div>
             </div>
 
         {% endif %}
-
-    {% else %}
-
-        <div class="responsive-table">
-
-            <div class="table-header">
-                <h3 class="table-caption">Items</h3>
-                <div class="table-inputs">
-                    <div class="search-bar">
-                        <span>
-                            <i>
-                                {% bs_icon 'search' %}
-                            </i>
-                        </span>
-                        <form action="{% url "items:search" %}" method="GET">
-                            <input type="search" id="search" placeholder="Search" name="q">
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="internal-table">
-                <div class="thead">
-                    <p class="not-logged-message">Login to see and add Items</p>
-                </div>
-            </div>
-        </div>
-
-    {% endif %}
-
-    <div class="responsive-table">
-        <div class="thead">Tables</div>
-        <div class="tbody">
-            <div class="table-row">
-                <div class="table-cel">
-                    <a href="{% url "items:index" %}">Items</a>
-                </div>
-                <div class="table-cel">
-                    <a href="{% url "items:transactions" %}">Transactions</a>
-                </div>
-            </div>
-        </div>
     </div>
 
 {% endblock content %}
