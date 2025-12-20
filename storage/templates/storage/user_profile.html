@@ -1,55 +1,43 @@
 {% extends "global/base.html" %}
 {% block content %}
 
-    {% if user.is_authenticated %}
-        <div class="single-item-table-margin">
-            <div class="responsive-table">
+    <div class="single-item-table">
 
-                <div class="single-item-table">
-                    <div class="single-item">
-                        <h1>• {{ single_user.id }} – {{ single_user.username }}</h1>
-                    </div>
+        <h1 class="title">• {{ single_user.id }} – {{ single_user.username }}</h1>
 
-                    <div class="single-item-info">
-                        <p class="single-item-details">
-                            <b>ID: </b>{{ single_user.id }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>First Name: </b>{{ single_user.first_name }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>Last Name: </b>{{ single_user.last_name }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>E-mail: </b>{{ single_user.email }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>Joined In: </b>{{ single_user.date_joined }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>Last Login </b>{{ single_user.last_login }}
-                        </p>
-                    </div>
-
-                    {% if user == single_user %}
-                        <div class="buttons">
-
-                            <a type="button" id="update-button" href="{% url "items:user_update" %}">Update</a>
-
-                            <form action="{% url "items:logout" %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" id="delete-button">Logout</button>
-                            </form>
-                        </div>
-                    {% endif %}
-
-                </div>
-            </div>
-
-            <div class="responsive-table">
-                {% include "storage/partials/transaction_table.html" %}
-            </div>
+        <div class="single-item-info">
+            <p class="single-item-details">
+                <b>ID: </b>{{ single_user.id }}
+            </p>
+            <p class="single-item-details">
+                <b>First Name: </b>{{ single_user.first_name }}
+            </p>
+            <p class="single-item-details">
+                <b>Last Name: </b>{{ single_user.last_name }}
+            </p>
+            <p class="single-item-details">
+                <b>E-mail: </b>{{ single_user.email }}
+            </p>
+            <p class="single-item-details">
+                <b>Joined In: </b>{{ single_user.date_joined }}
+            </p>
+            <p class="single-item-details">
+                <b>Last Login </b>{{ single_user.last_login }}
+            </p>
         </div>
 
-    {% endif %}
+        {% if user == single_user %}
+            <div class="buttons">
+
+                <a type="button" class="btn" href="{% url "items:user_update" %}">Update</a>
+
+                <form action="{% url "items:logout" %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Logout</button>
+                </form>
+            </div>
+        {% endif %}
+
+    </div>
+
 {% endblock content %}
