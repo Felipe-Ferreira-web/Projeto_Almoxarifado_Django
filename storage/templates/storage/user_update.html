@@ -3,8 +3,8 @@
 {% block content %}
 
     {% if user.is_authenticated %}
-        <div class="form">
-            <h2 class="form-name">Update User</h2>
+        <div class="register-container">
+            <h2 class="title">Update User</h2>
 
             {% include "storage/partials/user_form.html" %}
             <button class="btn" type"submit">Update</button>
@@ -12,7 +12,7 @@
 
     {% else %}
 
-        <h2 class="form-name">Login or Register</h2>
+        <h2 class="title">Login or Register</h2>
 
         <p class="logout-text">
             You ure currently not logged in.

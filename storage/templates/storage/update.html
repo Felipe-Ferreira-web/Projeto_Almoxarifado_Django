@@ -1,66 +1,56 @@
 {% extends "global/base.html" %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <div class="form">
 
-            <h2 class="form-name">Update Item</h2>
+    <div class="register-container">
 
-            <form action
-                  "
-                  {% url "items:create" %}
-                  "
-                  method="POST"
-                  enctype="multpart/form-data"
-                  class="form-content">
+        <h2 class="title">Update Item</h2>
 
-                {% csrf_token %}
+        <form action
+              "
+              {% url "items:create" %}
+              "
+              method="POST"
+              enctype="multpart/form-data"
+              class="form-content">
 
-                {% for field in form %}
+            {% csrf_token %}
 
-                    {% if field.name == "is_available" %}
+            {% for field in form %}
 
-                        <div class="form-group">
-                            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                {% if field.name == "is_available" %}
+
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                        {{ field }}
+                        <div class="field-help-text">{{ field.help_text }}</div>
+                        <div class="field-error">{{ field.errors }}</div>
+                    </div>
+
+                {% else %}
+
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                        <div class="field">
                             {{ field }}
                             <div class="field-help-text">{{ field.help_text }}</div>
-                            <div class="field-error">{{ field.errors }}</div>
                         </div>
-
-                    {% else %}
-
-                        <div class="form-group">
-                            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-                            <div class="field">
-                                {{ field }}
-                                <div class="field-help-text">{{ field.help_text }}</div>
-                            </div>
-                            <div class="field-error">{{ field.errors }}</div>
-                        </div>
-
-                    {% endif %}
-
-                {% endfor %}
-                <div class="btn-options">
-                    <button class="btn" type"submit">Update</button>
-                    <div class="side-to-side-btn">
-                        <a class="btn secondary"
-                           type="button"
-                           href="{% url 'items:item' item.item_id %}">View Item</a>
-                        <a class="btn secondary" type="button" href="{% url "items:create" %}">New Item</a>
+                        <div class="field-error">{{ field.errors }}</div>
                     </div>
+
+                {% endif %}
+
+            {% endfor %}
+            <div class="btn-options">
+                <button class="btn" type"submit">Update</button>
+                <div class="side-to-side-btn">
+                    <a class="btn secondary"
+                       type="button"
+                       href="{% url 'items:item' item.item_id %}">View Item</a>
+                    <a class="btn secondary" type="button" href="{% url "items:create" %}">New Item</a>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
 
-    {% else %}
-
-        <h2 class="form-name">Login or Register</h2>
-
-        <p class="logout-text">
-            You ure currently not logged in.
-            Click <a href="{% url "items:login" %}">here</a>
-            to login.
-        </p>
-    {% endif %}
 {% endblock content %}

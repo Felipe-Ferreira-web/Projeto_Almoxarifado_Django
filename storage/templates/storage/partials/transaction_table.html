@@ -9,23 +9,20 @@
     </div>
 
     <div class="tbody">
+
         {% for transaction in page_obj %}
+
             <div class="table-row">
-                <p class="table-cel">
-                    <a class="table-link">{{ transaction.id }}</a>
-                </p>
-                <p class="table-cel">
-                    <a class="table-link">{{ transaction.item.item_id }}</a>
-                </p>
-                <p class="table-cel">
-                    <a class="table-link">{{ transaction.item.object }}</a>
-                </p>
-                <p class="table-cel">
-                    <a class="table-link">{{ transaction.from_user.id }}</a>
-                </p>
-                <p class="table-cel">
-                    <a class="table-link">{{ transaction.to_user.id }}</a>
-                </p>
+
+                <a class="table-link">{{ transaction.id }}</a>
+
+                <a class="table-link">{{ transaction.item.item_id }}</a>
+
+                <a class="table-link">{{ transaction.item.object }}</a>
+
+                <a class="table-link">{{ transaction.from_user.id }}</a>
+
+                <a class="table-link">{{ transaction.to_user.id }}</a>
 
                 {% if item.owner %}
                     {% if item.is_available and item.owner != request.user %}
@@ -41,8 +38,10 @@
                             <button type="submit" id="delete-button">Return</button>
                         </form>
                     {% endif %}
+
                 {% endif %}
             </div>
+
         {% endfor %}
     </div>
 </div>

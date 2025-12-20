@@ -1,72 +1,67 @@
 {% extends "global/base.html" %}
 {% block content %}
 
-    {% if user.is_authenticated %}
-        <div class="single-item-table-margin">
-            <div class="responsive-table">
+    <main class="main-container">
 
-                <div class="single-item-table">
-                    <div class="single-item">
-                        <h1>• {{ item.item_id }} – {{ item.object }}</h1>
-                        <div class="description">
-                            <p>
-                                <b>Description: </b> {{ item.description }}
-                            </p>
-                        </div>
+        {% include "global/partials/messages.html" %}
 
+        <div class="single-item-table">
+
+            <h1 class="title">• {{ item.item_id }} – {{ item.object }}</h1>
+
+            <div class="single-item-info">
+                {% if item.description %}
+                    <p class="single-item-details">
+                        <b>Description: </b> {{ item.description }}
+                    </p>
+                {% endif %}
+                <p class="single-item-details">
+                    <b>ID: </b>{{ item.item_id }}
+                </p>
+                <p class="single-item-details">
+                    <b>Quantity: </b>{{ item.quantity }}
+                </p>
+                <p class="single-item-details">
+                    <b>Storage location: </b>{{ item.storage_location }}
+                </p>
+                <p class="single-item-details">
+                    <b>Disponibility: </b>{{ item.is_available }}
+                </p>
+                <p class="single-item-details">
+                    <b>Created Date: </b>{{ item.created_date }}
+                </p>
+                <p class="single-item-details">
+                    <b>Owner ID: </b>{{ item.owner_id }}
+                </p>
+
+                {% if item.current_user %}
+                    <p class="single-item-details">
+                        <b>Current Holder ID: </b>{{ item.current_user.id }}
+                    </p>
+                {% endif %}
+
+                {% if user == item.owner %}
+                    <div class="buttons">
+
+                        <a type="button"
+                           class="btn"
+                           href="{% url "items:update" item.item_id %}">Update</a>
+
+                        <form action="{% url "items:delete" item.item_id %}" method="POST">
+                            {% csrf_token %}
+
+                            {% if confirmation == "no" %}
+                                <input type="hidden" name="confirmation" value="yes">
+                                <button type="submit" class="btn">Are you Sure?</button>
+
+                            {% else %}
+                                <button type="submit" class="btn">Delete</button>
+                            {% endif %}
+                        </form>
                     </div>
+                {% endif %}
 
-                    <div class="single-item-info">
-                        <p class="single-item-details">
-                            <b>ID: </b>{{ item.item_id }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>Quantity: </b>{{ item.quantity }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>Storage location: </b>{{ item.storage_location }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>Disponibility: </b>{{ item.is_available }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>Created Date: </b>{{ item.created_date }}
-                        </p>
-                        <p class="single-item-details">
-                            <b>Owner ID: </b>{{ item.owner_id }}
-                        </p>
-
-                        {% if item.current_user %}
-                            <p class="single-item-details">
-                                <b>Current Holder ID: </b>{{ item.current_user.id }}
-                            </p>
-                        {% endif %}
-
-                    </div>
-
-                    {% if user == item.owner %}
-                        <div class="buttons">
-
-                            <a type="button"
-                               id="update-button"
-                               href="{% url "items:update" item.item_id %}">Update</a>
-
-                            <form action="{% url "items:delete" item.item_id %}" method="POST">
-                                {% csrf_token %}
-
-                                {% if confirmation == "no" %}
-                                    <input type="hidden" name="confirmation" value="yes">
-                                    <button type="submit" id="delete-button">Are you Sure?</button>
-
-                                {% else %}
-                                    <button type="submit" id="delete-button">Delete</button>
-                                {% endif %}
-                            </form>
-                        </div>
-                    {% endif %}
-                </div>
             </div>
-
         </div>
-    {% endif %}
+    </main>
 {% endblock content %}
