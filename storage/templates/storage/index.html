@@ -52,7 +52,7 @@
                                     {% if item.is_available %}
                                         Available
                                     {% else %}
-                                        Occupied
+                                        Unavailable
                                     {% endif %}
                                 </a>
 
@@ -63,7 +63,7 @@
                                         <a class="table-link">
                                             <form action="{% url "items:transaction" item.item_id %}" method="POST">
                                                 {% csrf_token %}
-                                                <button type="submit" class="transaction-btn">
+                                                <button title="Borrow Item from Owner" type="submit" class="transaction-btn">
                                                     {% bs_icon 'arrow-down' %}
                                                 </button>
                                             </form>
@@ -76,7 +76,9 @@
                                         <a class="table-link">
                                             <form action="{% url "items:transaction" item.item_id %}" method="POST">
                                                 {% csrf_token %}
-                                                <button type="submit" class="transaction-btn">{% bs_icon 'arrow-up' %}</button>
+                                                <button title="Return Item to Owner" type="submit" class="transaction-btn">
+                                                    {% bs_icon 'arrow-up' %}
+                                                </button>
                                             </form>
                                         </a>
 

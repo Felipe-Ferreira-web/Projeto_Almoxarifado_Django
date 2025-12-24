@@ -2,55 +2,58 @@
 
 {% block content %}
 
-    <div class="register-container">
+    <div class="info-container">
 
-        <h2 class="title">Update Item</h2>
+        <div class="register-container">
 
-        <form action
-              "
-              {% url "items:create" %}
-              "
-              method="POST"
-              enctype="multpart/form-data"
-              class="form-content">
+            <h2 class="title">Update Item</h2>
 
-            {% csrf_token %}
+            <form action
+                  "
+                  {% url "items:create" %}
+                  "
+                  method="POST"
+                  enctype="multpart/form-data"
+                  class="form-content">
 
-            {% for field in form %}
+                {% csrf_token %}
 
-                {% if field.name == "is_available" %}
+                {% for field in form %}
 
-                    <div class="form-group">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-                        {{ field }}
-                        <div class="field-help-text">{{ field.help_text }}</div>
-                        <div class="field-error">{{ field.errors }}</div>
-                    </div>
+                    {% if field.name == "is_available" %}
 
-                {% else %}
-
-                    <div class="form-group">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-                        <div class="field">
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
                             {{ field }}
                             <div class="field-help-text">{{ field.help_text }}</div>
+                            <div class="field-error">{{ field.errors }}</div>
                         </div>
-                        <div class="field-error">{{ field.errors }}</div>
+
+                    {% else %}
+
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                            <div class="field">
+                                {{ field }}
+                                <div class="field-help-text">{{ field.help_text }}</div>
+                            </div>
+                            <div class="field-error">{{ field.errors }}</div>
+                        </div>
+
+                    {% endif %}
+
+                {% endfor %}
+                <div class="btn-options">
+                    <button class="btn" type"submit">Update</button>
+                    <div class="side-to-side-btn">
+                        <a class="btn secondary"
+                           type="button"
+                           href="{% url 'items:item' item.item_id %}">View Item</a>
+                        <a class="btn secondary" type="button" href="{% url "items:create" %}">New Item</a>
                     </div>
-
-                {% endif %}
-
-            {% endfor %}
-            <div class="btn-options">
-                <button class="btn" type"submit">Update</button>
-                <div class="side-to-side-btn">
-                    <a class="btn secondary"
-                       type="button"
-                       href="{% url 'items:item' item.item_id %}">View Item</a>
-                    <a class="btn secondary" type="button" href="{% url "items:create" %}">New Item</a>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
 {% endblock content %}
