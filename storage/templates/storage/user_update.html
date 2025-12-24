@@ -2,22 +2,27 @@
 
 {% block content %}
 
-    {% if user.is_authenticated %}
-        <div class="register-container">
-            <h2 class="title">Update User</h2>
+    <div class="update-container">
 
-            {% include "storage/partials/user_form.html" %}
-            <button class="btn" type"submit">Update</button>
-        </div>
+        {% include "global/partials/messages.html" %}
 
-    {% else %}
+        {% if user.is_authenticated %}
+            <div class="register-container">
+                <h2 class="title">Update User</h2>
 
-        <h2 class="title">Login or Register</h2>
+                {% include "storage/partials/user_form.html" %}
+                <button class="btn" type"submit">Update</button>
+            </div>
 
-        <p class="logout-text">
-            You ure currently not logged in.
-            Click <a href="{% url "items:login" %}">here</a>
-            to login.
-        </p>
-    {% endif %}
+        {% else %}
+
+            <h2 class="title">Login or Register</h2>
+
+            <p class="logout-text">
+                You ure currently not logged in.
+                Click <a href="{% url "items:login" %}">here</a>
+                to login.
+            </p>
+        {% endif %}
+    </div>
 {% endblock content %}
