@@ -9,59 +9,55 @@
 
             <h1 class="title">• {{ item.item_id }} – {{ item.object }}</h1>
 
-            <div class="single-item-info">
-                {% if item.description %}
-                    <p class="single-item-details">
-                        <b>Description: </b> {{ item.description }}
-                    </p>
-                {% endif %}
-                <p class="single-item-details">
-                    <b>ID: </b>{{ item.item_id }}
-                </p>
-                <p class="single-item-details">
-                    <b>Quantity: </b>{{ item.quantity }}
-                </p>
-                <p class="single-item-details">
-                    <b>Storage location: </b>{{ item.storage_location }}
-                </p>
-                <p class="single-item-details">
-                    <b>Disponibility: </b>{{ item.is_available }}
-                </p>
-                <p class="single-item-details">
-                    <b>Created Date: </b>{{ item.created_date }}
-                </p>
-                <p class="single-item-details">
-                    <b>Owner ID: </b>{{ item.owner_id }}
-                </p>
+            {% if item.description %}
+                <b class="data-name">Description: </b>
+                <p class="single-item-details">{{ item.description }}</p>
+            {% endif %}
 
-                {% if item.current_user %}
-                    <p class="single-item-details">
-                        <b>Current Holder ID: </b>{{ item.current_user.id }}
-                    </p>
-                {% endif %}
+            <b class="data-name">ID: </b>
+            <p class="single-item-details">{{ item.item_id }}</p>
 
-                {% if user == item.owner %}
-                    <div class="buttons">
+            <b class="data-name">Quantity: </b>
+            <p class="single-item-details">{{ item.quantity }}</p>
 
-                        <a type="button"
-                           class="btn"
-                           href="{% url "items:update" item.item_id %}">Update</a>
+            <b class="data-name">Storage location: </b>
+            <p class="single-item-details">{{ item.storage_location }}</p>
 
-                        <form action="{% url "items:delete" item.item_id %}" method="POST">
-                            {% csrf_token %}
+            <b class="data-name">Disponibility: </b>
+            <p class="single-item-details">{{ item.is_available }}</p>
 
-                            {% if confirmation == "no" %}
-                                <input type="hidden" name="confirmation" value="yes">
-                                <button type="submit" class="btn">Are you Sure?</button>
+            <b class="data-name">Created Date: </b>
+            <p class="single-item-details">{{ item.created_date }}</p>
 
-                            {% else %}
-                                <button type="submit" class="btn">Delete</button>
-                            {% endif %}
-                        </form>
-                    </div>
-                {% endif %}
+            <b class="data-name">Owner ID: </b>
+            <p class="single-item-details">{{ item.owner_id }}</p>
 
-            </div>
+            {% if item.current_user %}
+                <b>Current Holder ID: </b>
+                <p class="single-item-details">{{ item.current_user.id }}</p>
+            {% endif %}
+
+            {% if user == item.owner %}
+                <div class="buttons">
+
+                    <a type="button"
+                       class="btn"
+                       href="{% url "items:update" item.item_id %}">Update</a>
+
+                    <form action="{% url "items:delete" item.item_id %}" method="POST">
+                        {% csrf_token %}
+
+                        {% if confirmation == "no" %}
+                            <input type="hidden" name="confirmation" value="yes">
+                            <button type="submit" class="btn">Are you Sure?</button>
+
+                        {% else %}
+                            <button type="submit" class="btn">Delete</button>
+                        {% endif %}
+                    </form>
+                </div>
+            {% endif %}
+
         </div>
     </main>
 {% endblock content %}

@@ -1,43 +1,48 @@
 {% extends "global/base.html" %}
+{% load bootstrap_icons %}
+{% load static %}
+
 {% block content %}
 
-    <div class="single-item-table">
+    <div class="info-container">
 
-        <h1 class="title">• {{ single_user.id }} – {{ single_user.username }}</h1>
+        <div class="single-item-table">
 
-        <div class="single-item-info">
-            <p class="single-item-details">
-                <b>ID: </b>{{ single_user.id }}
-            </p>
-            <p class="single-item-details">
-                <b>First Name: </b>{{ single_user.first_name }}
-            </p>
-            <p class="single-item-details">
-                <b>Last Name: </b>{{ single_user.last_name }}
-            </p>
-            <p class="single-item-details">
-                <b>E-mail: </b>{{ single_user.email }}
-            </p>
-            <p class="single-item-details">
-                <b>Joined In: </b>{{ single_user.date_joined }}
-            </p>
-            <p class="single-item-details">
-                <b>Last Login </b>{{ single_user.last_login }}
-            </p>
+            <div class="profile-pic">{% bs_icon 'person-circle' %}</div>
+
+            <h1 class="title">{{ single_user.id }} – {{ single_user.username }}</h1>
+
+            <b class="data-name">ID: </b>
+            <p class="single-item-details">{{ single_user.id }}</p>
+
+            <b class="data-name">First Name: </b>
+            <p class="single-item-details">{{ single_user.first_name }}</p>
+
+            <b class="data-name">Last Name: </b>
+            <p class="single-item-details">{{ single_user.last_name }}</p>
+
+            <b class="data-name">E-mail: </b>
+            <p class="single-item-details">{{ single_user.email }}</p>
+
+            <b class="data-name">Joined In: </b>
+            <p class="single-item-details">{{ single_user.date_joined }}</p>
+
+            <b class="data-name">Last Login: </b>
+            <p class="single-item-details">{{ single_user.last_login }}</p>
+
+            {% if user == single_user %}
+                <div class="buttons">
+
+                    <a type="button" class="btn" href="{% url "items:user_update" %}">Update</a>
+
+                    <form action="{% url "items:logout" %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Logout</button>
+                    </form>
+                </div>
+            {% endif %}
+
         </div>
-
-        {% if user == single_user %}
-            <div class="buttons">
-
-                <a type="button" class="btn" href="{% url "items:user_update" %}">Update</a>
-
-                <form action="{% url "items:logout" %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn">Logout</button>
-                </form>
-            </div>
-        {% endif %}
-
     </div>
 
 {% endblock content %}
