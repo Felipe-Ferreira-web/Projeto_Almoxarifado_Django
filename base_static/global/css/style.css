@@ -469,7 +469,7 @@ body {
 .form-group textarea {
   min-width: 450px;
   max-width: 800px; 
-  height: 40px;
+  height: 50px;
   margin: 0.5rem auto;
   padding: 15px 30px 15px 15px;
   display: inline-block;
@@ -486,6 +486,17 @@ body {
 .form-group input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none; /* Remove as setas */
   margin: 0;
+}
+
+.form-group input[type="number"]::-moz-inner-spin-button,
+.form-group input[type="number"]::-moz-outer-spin-button {
+  -moz-appearance: none; /* Remove as setas */
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
+  appearance: none; /* Firefox */
 }
 
 .form-group textarea {
@@ -511,17 +522,6 @@ border: 1px solid var(--blue-700);
 border: 2px solid var(--blue-700);
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-input[type=number] {
-  -moz-appearance:textfield;
-  appearance: none; /* Firefox */
-}
-
 .form-group label {
   color: var(--neutral-700);
   font-weight: bold;
@@ -540,10 +540,15 @@ input[type=number] {
 
 .field-error li {
   max-width: 450px;
+  font-size: 5px;
   border-color: 1px var(--neutral-200);
-  color: var(--black);
+  color: var(--red-action);
   font-size: 18px;
   margin: 0.5rem auto;
+}
+
+.field-error ul {
+  max-width: 450px;
 }
 
 .info-container {
@@ -638,7 +643,7 @@ input[type=number] {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 115px;
+  height: 100px;
   color: var(--neutral-700);
   background-color: var(--neutral-200);
   border-top-left-radius: var(--Border_radius-sml);
@@ -688,6 +693,14 @@ input[type=number] {
 
 /* login */
 
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  margin: 0 auto;
+  gap: 2vh;
+}
+
 .login-form {
   display: flex;
   flex-direction: column;
@@ -695,7 +708,7 @@ input[type=number] {
 
   height: 50%;
   width: 530px;
-  margin: 0 auto;
+  margin: 0 auto 100px auto;
 
   color: var(--black);
   box-shadow: var(--Box_shadow);
@@ -723,7 +736,6 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
-
 .register-container {
   display: flex;
   flex-direction: column;
@@ -747,11 +759,11 @@ input:-webkit-autofill {
   margin-top: 40px;
 }
 
-
 /* messages */
 
 .message {
   display: flex;
+  align-items: flex-start;
   max-width: 600px;
   padding: 0 2rem 0 2rem;
   height: 60px;
@@ -778,6 +790,7 @@ input:-webkit-autofill {
 .main-content {
   display: flex;
   justify-content: center;
+  justify-content: flex-start;
   margin: 0 auto;
   flex-direction: column;
 }
@@ -802,9 +815,7 @@ input:-webkit-autofill {
   width: 100%; 
   min-height: auto;     
   flex-direction: row;    
-  justify-content: center;
-  align-items: center;
-  position: relative;    
+  position: relative;
   box-shadow: var(--Box_shadow); 
   }
 
