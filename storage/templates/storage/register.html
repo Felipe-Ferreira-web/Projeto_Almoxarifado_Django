@@ -1,4 +1,5 @@
 {% extends "global/base.html" %}
+{% load static %}
 
 {% block content %}
     {% if user.is_authenticated %}
@@ -13,6 +14,14 @@
         </div>
     {% else %}
         <div class="register-container">
+
+            <a id="table-ilustration">
+                <img id="logo-ilustration"
+                     src="{% static "media\pictures\logo-gray.svg" %}"
+                     alt="Logo Storage">
+
+                <h1>Warehouse</h1>
+            </a>
             <h2 class="title">Register</h2>
 
             {% include "storage/partials/user_form.html" %}

@@ -1,28 +1,43 @@
 {% extends "global/base.html" %}
+{% load static %}
 
 {% block content %}
-    <div class="login-form">
-        {% if user.is_authenticated %}
-            <h2 class="title">Logout</h2>
 
-            <p class="logout-text">
-                You are logged as {{ user.username }}.
-                Click <a href="{% url "items:logout" %}">here</a>
-                to exit.
-            </p>
-        {% else %}
+    <div class="login-container">
 
-            <h2 class="title">Login</h2>
+        {% include "global/partials/messages.html" %}
 
-            {% include "storage/partials/user_form.html" %}
+        <div class="login-form">
+            {% if user.is_authenticated %}
+                <h2 class="title">Logout</h2>
 
-            <button class="btn" type"submit">Login</button>
+                <p class="logout-text">
+                    You are logged as {{ user.username }}.
+                    Click <a href="{% url "items:logout" %}">here</a>
+                    to exit.
+                </p>
+            {% else %}
 
-            <div class="sign-up-container">
-                <p>If this is your first time here! Click here to</p>
-                <a type="button" href="{% url "items:register" %}">Sign Up.</a>
-            </div>
+                <a id="table-ilustration">
+                    <img id="logo-ilustration"
+                         src="{% static "media\pictures\logo-gray.svg" %}"
+                         alt="Logo Storage">
 
-        {% endif %}
+                    <h1>Warehouse</h1>
+                </a>
+
+                <h2 class="title">Login</h2>
+
+                {% include "storage/partials/user_form.html" %}
+
+                <button class="btn" type"submit">Login</button>
+
+                <div class="sign-up-container">
+                    <p>Don't have an account?</p>
+                    <a type="button" href="{% url "items:register" %}">Sign Up.</a>
+                </div>
+
+            {% endif %}
+        </div>
     </div>
 {% endblock content %}

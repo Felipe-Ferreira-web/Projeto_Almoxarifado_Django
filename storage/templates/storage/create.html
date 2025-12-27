@@ -1,52 +1,61 @@
 {% extends "global/base.html" %}
+{% load static %}
 
 {% block content %}
 
-    {% if user.is_authenticated %}
+    <div class="main-container">
 
-        <div class="info-container">
-            <div class="register-container">
+        <div class="register-container">
 
-                <h2 class="title">Create Item</h2>
+            <a id="table-ilustration">
+                <img id="logo-ilustration"
+                     src="{% static "media\pictures\logo-gray.svg" %}"
+                     alt="Logo Storage">
 
-                <form action
-                      "
-                      {% url "items:create" %}
-                      "
-                      method="POST"
-                      class="form-content">
+                <h1>Warehouse</h1>
+            </a>
 
-                    {% csrf_token %}
+            <h2 class="title">Create Item</h2>
 
-                    {% for field in form %}
+            <form action
+                  "
+                  {% url "items:create" %}
+                  "
+                  method="POST"
+                  class="form-content">
 
-                        {% if field.name == "is_available" %}
+                {% csrf_token %}
 
-                            <div class="form-group">
-                                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                {% for field in form %}
+
+                    {% if field.name == "is_available" %}
+
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                            {{ field }}
+                            <div class="field-help-text">{{ field.help_text }}</div>
+                            <div class="field-error">{{ field.errors }}</div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                            <div class="field">
                                 {{ field }}
                                 <div class="field-help-text">{{ field.help_text }}</div>
-                                <div class="field-error">{{ field.errors }}</div>
                             </div>
+                            <div class="field-error">{{ field.errors }}</div>
+                        </div>
 
-                        {% else %}
+                    {% endif %}
 
-                            <div class="form-group">
-                                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-                                <div class="field">
-                                    {{ field }}
-                                    <div class="field-help-text">{{ field.help_text }}</div>
-                                </div>
-                                <div class="field-error">{{ field.errors }}</div>
-                            </div>
+                {% endfor %}
+                <button class="btn" type"submit">Create</button>
+            </form>
 
-                        {% endif %}
-
-                    {% endfor %}
-                    <button class="btn" type"submit">Create</button>
-                </form>
-            </div>
         </div>
+
     </div>
-{% endif %}
+
 {% endblock content %}

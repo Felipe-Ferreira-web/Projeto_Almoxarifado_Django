@@ -1,13 +1,22 @@
 {% extends "global/base.html" %}
+{% load static %}
 
 {% block content %}
 
-    <div class="info-container">
+    <div class="main-container">
 
         {% include "global/partials/messages.html" %}
 
         {% if user.is_authenticated %}
             <div class="register-container">
+
+                <a id="table-ilustration">
+                    <img id="logo-ilustration"
+                         src="{% static "media\pictures\logo-gray.svg" %}"
+                         alt="Logo Storage">
+
+                    <h1>Warehouse</h1>
+                </a>
                 <h2 class="title">Update User</h2>
 
                 {% include "storage/partials/user_form.html" %}

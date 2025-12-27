@@ -1,4 +1,8 @@
 {% extends "global/base.html" %}
+
+{% load bootstrap_icons %}
+{% load static %}
+
 {% block content %}
 
     <main class="main-container">
@@ -7,7 +11,15 @@
 
         <div class="single-item-table">
 
-            <h1 class="title">• {{ item.item_id }} – {{ item.object }}</h1>
+            <a id="table-ilustration">
+                <img id="logo-ilustration"
+                     src="{% static "media\pictures\logo-gray.svg" %}"
+                     alt="Logo Storage">
+
+                <h1>Warehouse</h1>
+            </a>
+
+            <h2 class="title">• {{ item.item_id }} – {{ item.object }}</h2>
 
             {% if item.description %}
                 <b class="data-name">Description: </b>
@@ -24,7 +36,20 @@
             <p class="single-item-details">{{ item.storage_location }}</p>
 
             <b class="data-name">Disponibility: </b>
-            <p class="single-item-details">{{ item.is_available }}</p>
+
+            <p class="single-item-details">
+                {% if item.is_available %}
+                    Available
+                {% else %}
+                    Unavailable
+                {% endif %}
+                <span class="dot
+                             {% if item.is_available %}
+                                 dot-green
+                             {% else %}
+                                 dot-red
+                             {% endif %}"></span>
+            </p>
 
             <b class="data-name">Created Date: </b>
             <p class="single-item-details">{{ item.created_date }}</p>
@@ -33,7 +58,7 @@
             <p class="single-item-details">{{ item.owner_id }}</p>
 
             {% if item.current_user %}
-                <b>Current Holder ID: </b>
+                <b class="data-name">Current Holder ID: </b>
                 <p class="single-item-details">{{ item.current_user.id }}</p>
             {% endif %}
 
@@ -52,7 +77,7 @@
                             <button type="submit" class="btn">Are you Sure?</button>
 
                         {% else %}
-                            <button type="submit" class="btn">Delete</button>
+                            <button type="submit" class="btn danger">Delete</button>
                         {% endif %}
                     </form>
                 </div>
