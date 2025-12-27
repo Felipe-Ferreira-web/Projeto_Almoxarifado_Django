@@ -33,7 +33,11 @@ def register(request):
             messages.success(request, "User registered successfully!")
             return redirect("items:login")
 
-    return render(request, "storage/register.html", {"form": form})
+    return render(
+        request,
+        "storage/register.html",
+        {"form": form, "template_name": "register.html"},
+    )
 
 
 @login_required(login_url="items:login")
@@ -104,7 +108,9 @@ def login_view(request):
         else:
             messages.error(request, "Login or password are incorrect")
 
-    return render(request, "storage/login.html", {"form": form})
+    return render(
+        request, "storage/login.html", {"form": form, "template_name": "login.html"}
+    )
 
 
 @login_required(login_url="items:login")

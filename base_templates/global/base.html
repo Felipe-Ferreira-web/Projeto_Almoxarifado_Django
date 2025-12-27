@@ -1,5 +1,5 @@
 {% load static %}
-<html lang="pt-BR">
+<html lang="en-us">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,9 @@
     <body>
         {% include "global/partials/header.html" %}
         <div class="main-content">
-            {% include "global/partials/aside.html" %}
+            {% if not template_name %}
+                {% include "global/partials/aside.html" %}
+            {% endif %}
             {% block content %}
                 <main class="content">
                 </main>
