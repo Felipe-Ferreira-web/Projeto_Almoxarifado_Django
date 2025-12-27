@@ -4,13 +4,13 @@
 
 {% block content %}
 
-    <div class="info-container">
+    <div class="main-container">
 
         <div class="single-item-table">
 
             <div class="profile-pic">{% bs_icon 'person-circle' %}</div>
 
-            <h1 class="title">{{ single_user.id }} – {{ single_user.username }}</h1>
+            <h1 class="title">{{ single_user.username }}</h1>
 
             <b class="data-name">ID: </b>
             <p class="single-item-details">{{ single_user.id }}</p>
@@ -37,7 +37,7 @@
 
                     <form action="{% url "items:logout" %}" method="POST">
                         {% csrf_token %}
-                        <button type="submit" class="btn">Logout</button>
+                        <button type="submit" class="btn danger">Logout</button>
                     </form>
                 </div>
             {% endif %}
