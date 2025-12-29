@@ -97,14 +97,11 @@ def search(request):
     if search_value == "":
         return redirect("items:index")
 
-    items = Item.objects.filter(
-        Q(item_id__icontains=search_value)
-        | Q(object__icontains=search_value)
-        # | Q(owner__icontains=search_value)
-        # | Q(description__icontains=search_value)
-        # | Q(storage_location__icontains=search_value)
-        # | Q(created_date__icontains=search_value)
-    ).order_by("-item_id")
+    items = (
+        Item.object.select_related("owner")
+        .filter(Q(item_id__icontains=search_value) | Q(object__icontains=search_value))
+        .order_by("-item_id")
+    )
 
     paginator = Paginator(items, 10)
     page_number = request.GET.get("page")
