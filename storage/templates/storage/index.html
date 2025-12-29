@@ -101,17 +101,19 @@
 
     {% else %}
 
-        <div class="single-item-table-margin">
-            <div class="responsive-table">
+        <main class="main-container">
+            {% include "global/partials/messages.html" %}
 
-                <div class="single-item-table">
-                    <div class="single-item">
-                        <h1 class="single-item-name">• Item não encontrado</h1>
-                    </div>
-                </div>
+            <h3 class="table-caption">Items</h3>
+
+            <div class="items-table">
+
+                <div class="table-header">{% include "global/partials/search_bar.html" %}</div>
+
+                <h1 class="single-item-name">• Item não encontrado</h1>
+
             </div>
-
-        {% endif %}
-    </div>
+        </main>
+    {% endif %}
 
 {% endblock content %}
