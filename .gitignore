@@ -8,7 +8,6 @@ media
 static/
 media/
 project/local_settings.py
-utils/list_itens.py
 
 # Backup files # 
 *.bak 
