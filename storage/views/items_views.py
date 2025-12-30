@@ -11,9 +11,10 @@ def index(request):
     View to display a paginated list of Item objects.
 
     Fetches all Item objects ordered descendingly by '-item_id'. Utilizes
-    'select_related' for one-to-one/foreign key relationships (owner) and
-    'prefetch_related' with a custom Prefetch objects for reverse relationships
-    (transaction_item).
+    'select_related' to perform a SQL JOIN, eagerly loading the 'owner'
+    and the 'current_loan' (including the borrower 'to_user'). This
+    optimization prevents the N+1 query problem when checking item
+    availability and current holders in the template.
 
     Parameters:
     -----------
@@ -27,12 +28,8 @@ def index(request):
         Renders 'storage/index.html' with a context containing the
         paginated items (page_obj) and the site_title.
     """
-    transactions_queryset = Transaction.objects.select_related("to_user")
-
-    items = (
-        Item.objects.select_related("owner")
-        .prefetch_related(Prefetch("transaction_item", queryset=transactions_queryset))
-        .order_by("-item_id")
+    items = Item.objects.select_related("owner", "current_loan__to_user").order_by(
+        "-item_id"
     )
 
     paginator = Paginator(items, 17)
@@ -40,7 +37,6 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     context = {"page_obj": page_obj, "site_title": "Items - "}
-
     return render(request, "storage/index.html", context)
 
 

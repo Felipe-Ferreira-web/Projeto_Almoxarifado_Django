@@ -32,6 +32,9 @@ class Item(models.Model):
     owner : ForeignKey
         Link to the User model, identifying the user who owns the item.
         If the linked user is deleted, the field is set to NULL.
+    current_loan : ForeignKey
+        Link to the current active Transaction record. This allows 1-step
+        access to the current borrower without expensive database lookups.
     """
 
     item_id = models.BigAutoField(primary_key=True)
@@ -43,34 +46,13 @@ class Item(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
 
-    @property
-    def current_user(self):
-        """
-        Property to determine the user currently holding the item.
-
-        If the item is available (is_available=True), returns None.
-        Otherwise, queries the related Transaction model (assuming a reverse
-        relationship 'transaction_item' exists) to find the most recent
-        active 'loan' transaction and returns the borrower (to_user).
-
-        Returns
-        -------
-        User or None
-            The User instance currently holding the item, or None if the item is
-            available or no active loan record is found.
-        """
-
-        if self.is_available:
-            return None
-
-        try:
-            active_loan = (
-                self.transaction_item.filter(type="loan").order_by("-loan_date").first()
-            )
-            return active_loan.to_user if active_loan else None
-
-        except Exception:
-            return None
+    current_loan = models.ForeignKey(
+        "Transaction",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="item_currently_assigned",
+    )
 
     def __str__(self) -> str:
         """
@@ -89,7 +71,9 @@ class Transaction(models.Model):
     Records the history of item loans and devolutions (returns) within the system.
 
     Tracks the item involved, the user lending/returning the item, the user
-    receiving/borrowing the item, and the status/timing of the transfer.
+    receiving/borrowing the item, and the timing of the transfer. This model
+    serves as the historical log, while its instances may be referenced by
+    the Item model's 'current_loan' field to indicate an active status.
 
     Attributes:
     -----------
@@ -100,21 +84,20 @@ class Transaction(models.Model):
     DEVOLUTION : str
         Constant representing an item being returned.
     item : ForeignKey
-        Link to the Item model that is being transacted. Set to NULL if the item is deleted.
+        Link to the Item model that is being transacted.
+        Note: An active LOAN transaction is linked back via Item.current_loan.
     from_user : ForeignKey
-        The User who is initiating the transfer (e.g., the owner during a LOAN, or the borrower during a DEVOLUTION).
+        The User initiating the transfer (owner during LOAN, borrower during DEVOLUTION).
     to_user : ForeignKey
-        The User who is receiving the transfer (e.g., the borrower during a LOAN, or the owner during a DEVOLUTION).
+        The User receiving the transfer (borrower during LOAN, owner during DEVOLUTION).
     was_available : BooleanField
-        Records the availability status of the item *before* this transaction occurred (defaults to True).
-    transaction_types : list of tuple
-        Choices available for the 'type' field ('loan' or 'devolution').
+        Records the availability status of the item *before* this transaction occurred.
     type : CharField
-        The nature of the transaction, restricted to 'loan' or 'devolution'.
+        The nature of the transaction ('loan' or 'devolution').
     loan_date : DateTimeField
-        The date and time the transaction record was created (defaulting to the current time).
+        Timestamp of when the transaction record was created.
     returned_date : DateTimeField
-        The date and time the item was returned (used only for DEVOLUTION records).
+        Timestamp of when the item was returned (specifically for DEVOLUTION records).
     """
 
     id = models.BigAutoField(primary_key=True)

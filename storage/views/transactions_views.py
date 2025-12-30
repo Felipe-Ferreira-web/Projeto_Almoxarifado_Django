@@ -39,62 +39,64 @@ def ItemTransaction(request, item_id):
     """
     View to handle Item Loans and Devolutions.
 
-    Requires a logged user and only accepts the POST method for transactions.
-    The action is determined by the item's current availability (item.is_available).
+    Requires a logged-in user and only accepts POST requests. The action is
+    determined by the item's current availability, and the state is managed
+    by updating the 'current_loan' foreign key on the Item model.
 
     Flow:
     -----
-    1. LOAN (If item.is_available is True): Creates a LOAN transaction, sets item.is_available=False, and saves status.
-    2. DEVOLUTION (If item.is_available is False): Finds the active LOAN transaction by the current user.
-    If found and user matches active loan recipient, creates a DEVOLUTION transaction, sets item.is_available=True, and saves status.
+    1. LOAN (If item.is_available is True):
+        - Creates a LOAN transaction record.
+        - Sets item.is_available to False.
+        - Maps item.current_loan to the newly created transaction.
+        - Saves the item state.
+
+    2. DEVOLUTION (If item.is_available is False):
+        - Verifies if the 'current_loan' exists and if the logged-in user
+        matches the current borrower (to_user).
+        - Creates a DEVOLUTION transaction record.
+        - Sets item.is_available to True.
+        - Clears item.current_loan (sets to NULL).
+        - Saves the item state.
 
     Parameters:
     -----------
     request : HttpRequest
-        The HttpRequest object. Used to retrieve current transaction data.
+        The HttpRequest object containing user and method data.
     item_id : int
-        The primary key used to fetch in DB the object selected
+        The primary key of the Item to be transacted.
 
     Returns:
     --------
     HttpResponse:
-        -Redirects to 'items:index' if the request method is not POST (Integrity Check).
-        -Redirects to 'items:item' if the Loan Transaction succeed.
-        -Redirects to 'items:item' if the Devolution Transaction succeed.
-        -Redirects to 'items:index' if Devolution fails.
+        - Redirects to 'items:index' if the request method is not POST.
+        - Redirects to 'items:item' upon successful Loan or Devolution.
+        - Redirects to 'items:user_profile' with an error message if the user lacks permission to return the item.
     """
 
     if request.method != "POST":
-        return redirect("items:index", user_id=request.user.id)
+        return redirect("items:index")
 
     item = get_object_or_404(Item, pk=item_id)
 
     if item.is_available:
-        Transaction.objects.create(
+        new_loan = Transaction.objects.create(
             item=item,
             from_user=item.owner,
             to_user=request.user,
-            was_available=False,
+            was_available=True,
             type=Transaction.LOAN,
         )
 
         item.is_available = False
-
+        item.current_loan = new_loan
         item.save()
 
         messages.success(request, "Loan succeeded!")
         return redirect("items:item", item_id=item_id)
 
     else:
-        active_loan = (
-            Transaction.objects.filter(
-                item=item, to_user=request.user, type=Transaction.LOAN
-            )
-            .order_by("-loan_date")
-            .first()
-        )
-
-        if active_loan and active_loan.to_user == request.user:
+        if item.current_loan and item.current_loan.to_user == request.user:
 
             Transaction.objects.create(
                 item=item,
@@ -105,9 +107,12 @@ def ItemTransaction(request, item_id):
             )
 
             item.is_available = True
+            item.current_loan = None
             item.save()
 
             messages.success(request, "Devolution succeeded!")
             return redirect("items:item", item_id=item_id)
+        else:
+            messages.error(request, "You are not allowed to return this item.")
 
     return redirect("items:user_profile", user_id=request.user.id)
