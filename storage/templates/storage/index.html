@@ -64,20 +64,22 @@
                                             <form action="{% url "items:transaction" item.item_id %}" method="POST">
                                                 {% csrf_token %}
                                                 <button title="Borrow Item from Owner" type="submit" class="transaction-btn">
-                                                    {% bs_icon 'arrow-down' %}
+                                                    {% comment %} {% bs_icon 'arrow-down' %} {% endcomment %}
+                                                    Borrow
                                                 </button>
                                             </form>
                                         </a>
 
                                     {% endif %}
 
-                                    {% if not item.is_available and item.current_user == request.user %}
+                                    {% if not item.is_available and item.current_loan.to_user == request.user %}
 
                                         <a class="table-link">
                                             <form action="{% url "items:transaction" item.item_id %}" method="POST">
                                                 {% csrf_token %}
                                                 <button title="Return Item to Owner" type="submit" class="transaction-btn">
-                                                    {% bs_icon 'arrow-up' %}
+                                                    {% comment %} {% bs_icon 'arrow-up' %} {% endcomment %}
+                                                    Return
                                                 </button>
                                             </form>
                                         </a>
