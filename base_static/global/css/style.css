@@ -751,6 +751,7 @@ input:-webkit-autofill {
   justify-self: center;
 
   height: auto;
+  max-height: 950px;
 
   width: 35%;
   min-width: 550px;
