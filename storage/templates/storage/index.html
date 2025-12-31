@@ -64,8 +64,7 @@
                                             <form action="{% url "items:transaction" item.item_id %}" method="POST">
                                                 {% csrf_token %}
                                                 <button title="Borrow Item from Owner" type="submit" class="transaction-btn">
-                                                    {% comment %} {% bs_icon 'arrow-down' %} {% endcomment %}
-                                                    Borrow
+                                                    <p>&#8593</p>
                                                 </button>
                                             </form>
                                         </a>
@@ -78,8 +77,7 @@
                                             <form action="{% url "items:transaction" item.item_id %}" method="POST">
                                                 {% csrf_token %}
                                                 <button title="Return Item to Owner" type="submit" class="transaction-btn">
-                                                    {% comment %} {% bs_icon 'arrow-up' %} {% endcomment %}
-                                                    Return
+                                                    <p>&#8595</p>
                                                 </button>
                                             </form>
                                         </a>

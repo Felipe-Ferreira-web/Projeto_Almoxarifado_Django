@@ -369,6 +369,14 @@ body {
   font-weight: bold;
 }
 
+.transaction-btn p{
+  display: flex;
+  align-items: center ;
+  font-size: 20;
+  margin: 1px auto 7%;
+  font-weight: bold;
+}
+
 .transaction-btn:hover {
   cursor: pointer;
   transition: 0.5;
