@@ -1,4 +1,4 @@
-# **Projeto de Almoxarifado com Django**
+# **📦 Projeto de Almoxarifado com Django**
 ---
 Este projeto tem o propósito de ser um sistema para cadastro e aloção de itens, como um inventário, facilitando o registro e a logistica. Possuindo um sistema completo de cadastro de úsuarios com a função de transferência de items entre úsuarios.
 
@@ -17,7 +17,7 @@ flowchart TD
     I --> J[Fim] 
 ```
 
-*** Tecnoligias Utilizadas
+### Tecnoligias Utilizadas
 
 *[Python](https://www.python.org/)
 
@@ -98,9 +98,10 @@ Projeto_Almoxarifado_Django/
 ## ⏭️ Próximos passos
 
 ### Possivéis melhorias para este projeto:
----
 Adicionar features como o usuário poder criar um tempo limite para um empréstimo de item, e penalidades caso o usuário que pegou emprestado não o devolva.
+
 ---
 Criar a feature para os usuários poderem criar grupos e definir quem irá poder ver e poder transferir os Items.
+
 ---
 Criar a função de poder transferir apenas uma quantidade específicas de unidades do Item ao invés de tomar todas as unidades de um tipo de Item.
