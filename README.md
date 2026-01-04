@@ -19,11 +19,11 @@ flowchart TD
 
 ### Tecnoligias Utilizadas
 
-*[Python](https://www.python.org/)
+* [Python](https://www.python.org/)
 
-*[Django](https://www.djangoproject.com/)
+* [Django](https://www.djangoproject.com/)
 
-*[Faker](https://faker.readthedocs.io/en/master/)
+* [Faker](https://faker.readthedocs.io/en/master/)
 
 ## Dependências e Versões Necessárias
 
@@ -98,6 +98,8 @@ Projeto_Almoxarifado_Django/
 ## ⏭️ Próximos passos
 
 ### Possivéis melhorias para este projeto:
+
+---
 Adicionar features como o usuário poder criar um tempo limite para um empréstimo de item, e penalidades caso o usuário que pegou emprestado não o devolva.
 
 ---
