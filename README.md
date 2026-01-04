@@ -33,7 +33,7 @@ flowchart TD
 
 Clone git ou Baixe o arquivo ZIP
 
-Acesse a pasta \Projeto_Almoxarifade_Django no seu terminal
+Acesse a pasta `Projeto_Almoxarifade_Django/` no seu terminal
 
 Crie um ambiente virtual rode o comando:
 ```
